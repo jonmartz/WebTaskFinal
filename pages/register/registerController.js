@@ -9,8 +9,8 @@ angular.module("myApp")
             }
             else{
                 $scope.answer = "";
-                data =
-                $http.post('/someUrl', data).then(successCallback, errorCallback);
+                // data =
+                // $http.post('/someUrl', data).then(successCallback, errorCallback);
             }
         };
 
