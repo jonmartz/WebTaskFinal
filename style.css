@@ -43,30 +43,24 @@ div.menuItem.active {
 
 
 input[type=text], select, textarea {
-
     padding: 6px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    height: 30px;
     flex: 0 0 200px;
     margin-left: 10px;
-
-    /*width: 50%;*/
-    /*box-sizing: border-box;*/
-    /*margin-top: 6px;*/
-    /*margin-bottom: 16px;*/
-    /*resize: vertical*/
 }
 
+
 label {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
+    /*display: flex;*/
+    /*flex-direction: row;*/
+    /*justify-content: flex-end;*/
     text-align: right;
-    width: 300px;
+    /*width: 300px;*/
     line-height: 26px;
-    /*margin-top: 10px;*/
-    /*margin-bottom: 10px;*/
+
+    /*margin-top: 30px;*/
+    /*margin-bottom: 30px;*/
 }
 
 input[type=submit]:enabled {

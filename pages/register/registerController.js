@@ -1,11 +1,19 @@
 // register controller
 angular.module("myApp")
-    .controller("registerController", function ($scope, serviceCountries) {
+    .controller("registerController", function ($scope, service) {
         self = this;
 
         $scope.submit = function(){
-            $scope.answer = "Submitted! country: " + $scope.country
+            if ($scope.userCategories.length < 2){
+                $scope.answer = "please select at least 2 categories";
+            }
+            else{
+                $scope.answer = "";
+                data =
+                $http.post('/someUrl', data).then(successCallback, errorCallback);
+            }
         };
 
-        $scope.countries = serviceCountries.getCountries();
+        $scope.countries = service.getCountries();
+        $scope.categories = service.getCategories();
     });

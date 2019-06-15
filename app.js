@@ -32,7 +32,7 @@ app.config(function($routeProvider)  {
 });
 
 // custom service
-app.service('serviceCountries', function() {
+app.service('service', function() {
     this.getCountries = function() {
         return [
             "Australia",
@@ -47,6 +47,15 @@ app.service('serviceCountries', function() {
             "Panama",
             "Switzerland",
             "USA"
+        ]
+    }
+
+    this.getCategories = function() {
+        return [
+            "food",
+            "sightseeing",
+            "shopping",
+            "entertainment"
         ]
     }
 });

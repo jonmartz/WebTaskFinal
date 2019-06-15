@@ -1,26 +1,71 @@
 <form name="registerForm" ng-submit="submit()" novalidate>
 
-    <label>username<input type="text" name="uname" ng-model="uname" required ng-minlength="3" ng-maxlength="8"></label>
+    <label>username<input type="text" name="uname" ng-model="uname" required
+                          ng-minlength="3"
+                          ng-maxlength="8"
+                          ng-pattern="/^[a-zA-Z]*$/">
+    </label>
     <span ng-show="registerForm.uname.$error.minlength" style="color: red">min length is 3 </span>
     <span ng-show="registerForm.uname.$error.maxlength" style="color: red">max length is 8 </span>
+    <span ng-show="registerForm.uname.$error.pattern" style="color: red">enter only letters </span>
+    <br>
     <br>
 
-    <label>password<input type="text" name="password" ng-model="password" required ng-minlength="5" ng-maxlength="10"></label>
-    <span ng-show="registerForm.password.$error.minlength" style="color: red">min length is 5</span>
-    <span ng-show="registerForm.password.$error.maxlength" style="color: red">max length is 10</span>
+    <label>password<input type="text" name="password" ng-model="password" required
+                          ng-minlength="5"
+                          ng-maxlength="10"
+                          ng-pattern="/^[A-z0-9]+$/">
+    </label>
+    <span ng-show="registerForm.password.$error.minlength" style="color: red"> min length is 5</span>
+    <span ng-show="registerForm.password.$error.maxlength" style="color: red"> max length is 10</span>
+    <span ng-show="registerForm.password.$error.pattern" style="color: red">enter only letters and numbers </span>
+    <br>
     <br>
 
     <label>first name<input type="text" name="fname" ng-model="fname" required></label>
     <br>
+    <br>
 
     <label>last name<input type="text" name="lname" ng-model="lname" required></label>
     <br>
+    <br>
 
-<!--    <label>country<select name="country" ng-model="country" required>-->
-    <label>country<select ng-model="country" ng-options="item for item in countries"></select></label>
+    <label>city<input type="text" name="city" ng-model="city" required></label>
+    <br>
+    <br>
+
+    <label>country<select ng-model="country" ng-options="item for item in countries" required></select></label>
+    <br>
+    <br>
+
+    <label>mail<input type="text" name="mail" ng-model="mail" required></label>
+    <br>
+    <br>
+
+    <label>categories<select multiple
+                             data-ng-model="userCategories"
+                             data-ng-options="item for item in categories"
+                             required></select>
+    </label>
+    <br>
+    <br>
+
+    <label>question 1<input type="text" name="question1" ng-model="question1" required></label>
+    <br>
+    <br>
+
+    <label>answer 1<input type="text" name="answer1" ng-model="answer1" required></label>
+    <br>
+    <br>
+
+    <label>question 2<input type="text" name="question2" ng-model="question2" required></label>
+    <br>
+    <br>
+
+    <label>answer 2<input type="text" name="answer2" ng-model="answer2" required></label>
+    <br>
     <br>
 
     <input ng-disabled="registerForm.$invalid" type="submit" id="submit" value="Submit">
+    <p style="color: red">{{ answer }}</p>
 </form>
-
-<p>{{ answer }}</p>
