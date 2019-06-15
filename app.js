@@ -23,6 +23,30 @@ app.config(function($routeProvider)  {
             templateUrl: 'pages/http/request.html',
             controller : 'httpController as httpCtrl'
         })
+        .when('/register', {
+            templateUrl: 'pages/register/register.html',
+            controller : 'registerController as registerCtrl'
+        })
         // other
         .otherwise({ redirectTo: '/' });
+});
+
+// custom service
+app.service('serviceCountries', function() {
+    this.getCountries = function() {
+        return [
+            "Australia",
+            "Bolivia",
+            "China",
+            "Denemark",
+            "Israel",
+            "Latvia",
+            "Monaco",
+            "August",
+            "Norway",
+            "Panama",
+            "Switzerland",
+            "USA"
+        ]
+    }
 });

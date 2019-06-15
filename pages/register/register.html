@@ -1,0 +1,26 @@
+<form name="registerForm" ng-submit="submit()" novalidate>
+
+    <label>username<input type="text" name="uname" ng-model="uname" required ng-minlength="3" ng-maxlength="8"></label>
+    <span ng-show="registerForm.uname.$error.minlength" style="color: red">min length is 3 </span>
+    <span ng-show="registerForm.uname.$error.maxlength" style="color: red">max length is 8 </span>
+    <br>
+
+    <label>password<input type="text" name="password" ng-model="password" required ng-minlength="5" ng-maxlength="10"></label>
+    <span ng-show="registerForm.password.$error.minlength" style="color: red">min length is 5</span>
+    <span ng-show="registerForm.password.$error.maxlength" style="color: red">max length is 10</span>
+    <br>
+
+    <label>first name<input type="text" name="fname" ng-model="fname" required></label>
+    <br>
+
+    <label>last name<input type="text" name="lname" ng-model="lname" required></label>
+    <br>
+
+<!--    <label>country<select name="country" ng-model="country" required>-->
+    <label>country<select ng-model="country" ng-options="item for item in countries"></select></label>
+    <br>
+
+    <input ng-disabled="registerForm.$invalid" type="submit" id="submit" value="Submit">
+</form>
+
+<p>{{ answer }}</p>
