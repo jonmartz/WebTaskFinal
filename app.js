@@ -58,4 +58,18 @@ app.service('service', function() {
             "entertainment"
         ]
     }
+
+    this.createBody = function(table, columnsString, values){
+
+        let valuesString = "";
+        for (let i = 0; i < values.length; i++){
+            if (i > 0) valuesString += "+";
+            valuesString += values[i];
+        }
+        return {
+            "table": table,
+            "columns": columnsString,
+            "values": valuesString
+        };
+    }
 });

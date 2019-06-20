@@ -1,13 +1,13 @@
 <form name="registerForm" ng-submit="submit()" novalidate>
 
-    <label>username<input type="text" name="uname" ng-model="uname" required
+    <label>username<input type="text" name="username" ng-model="username" required
                           ng-minlength="3"
                           ng-maxlength="8"
                           ng-pattern="/^[a-zA-Z]*$/">
     </label>
-    <span ng-show="registerForm.uname.$error.minlength" style="color: red">min length is 3 </span>
-    <span ng-show="registerForm.uname.$error.maxlength" style="color: red">max length is 8 </span>
-    <span ng-show="registerForm.uname.$error.pattern" style="color: red">enter only letters </span>
+    <span ng-show="registerForm.username.$error.minlength" style="color: red">min length is 3 </span>
+    <span ng-show="registerForm.username.$error.maxlength" style="color: red">max length is 8 </span>
+    <span ng-show="registerForm.username.$error.pattern" style="color: red">enter only letters </span>
     <br>
     <br>
 
@@ -66,6 +66,6 @@
     <br>
     <br>
 
-    <input ng-disabled="registerForm.$invalid" type="submit" id="submit" value="Submit">
-    <p style="color: red">{{ answer }}</p>
+    <input ng-disabled="registerForm.$invalid" type="submit" id="submitButton" value="Submit">
+    <span style="color: red" id="submitText"> {{ answer }}</span>
 </form>
