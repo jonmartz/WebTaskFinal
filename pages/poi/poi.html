@@ -1,3 +1,18 @@
+<!-- scripts -->
+<script>
+    var citySearch = 0;
+    function navigate(toShow) {
+        citySearch = document.getElementById("myText").value;
+        for (var i = 1; i <= 2; i++) {
+            if (i == toShow) {
+                document.getElementById("div" + i.toString()).style.display = "block";
+            }
+            else
+                document.getElementById("div" + i.toString()).style.display = "none";
+        }
+    }
+</script>
+
 <!-- css -->
 <style>
     img {
@@ -7,9 +22,25 @@
 
 <h2>POI</h2>
 
+<h5>Search Point Of Interest by name:</h5>
+<input type="text" id="myText"><br>
+<button onclick="navigate(2)">Search</button><br>
+
+<div id="div2" style="display: none">
+    <p ng-repeat="(id, city) in poiCtrl.cities">
+        <div ng-if="city.name === citySearch">
+            City Name: <span ng-bind="city.name"></span><br>
+            City State: <span ng-bind="city.state"></span><br>
+            <img ng-src="{{ city.image }}">
+        </div>
+    </p>
+</div>
+
 <!-- display all cities -->
-<p ng-repeat="(id, city) in poiCtrl.cities">
-    City Name: <span ng-bind="city.name"></span><br>
-    City State: <span ng-bind="city.state"></span><br>
-    <img ng-src="{{ city.image }}">
-</p>
+<div id="div1" style="display: block">
+    <p ng-repeat="(id, city) in poiCtrl.cities">
+        City Name: <span ng-bind="city.name"></span><br>
+        City State: <span ng-bind="city.state"></span><br>
+        <img ng-src="{{ city.image }}">
+    </p>
+</div>
