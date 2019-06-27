@@ -7,4 +7,31 @@ angular.module("myApp")
         2: {name:"Jerusalem", state: "Israel", image: "https://cdni.rt.com/files/2017.12/article/5a3fe04efc7e93cd698b4567.jpg"},
         3: {name:"London", state: "England", image: "http://www.ukguide.co.il/Photos/England/London/British-Royal-Tour.jpg"}
     }
+    $scope.noMatches = "";
+    $scope.showFirst=true;
+    self.currCities={};
+    $scope.showAll=function()
+    {
+        $scope.noMatches = "";
+        $scope.showFirst=true;
+    }
+    $scope.findCity=function()
+    {
+        $scope.noMatches = "";
+        for (let [id,city] of Object.entries(self.cities))
+        {
+            self.currCities[id]=city;
+        } 
+        //let myCities=self.cities;
+        $scope.showFirst=false;
+        for (let [id1,city1] of Object.entries(self.currCities))
+        {
+            if(city1.name !== myText.value)
+            {
+                delete self.currCities[id1];
+            }
+        }   
+        if((Object.keys(self.currCities).length) === 0)
+            $scope.noMatches = "No Matches Found";
+    }
 });
