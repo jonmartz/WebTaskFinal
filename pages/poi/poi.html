@@ -7,9 +7,26 @@
 
 <h2>POI</h2>
 
+<h5>Search Point Of Interest by name:</h5>
+<input type="text" id="myText" ng-model="myText"><br><br>
+<button ng-click="findCity()" >Search</button><br><br>
+<button ng-click="showAll()" >Show All Cities</button><br>
+
+
 <!-- display all cities -->
-<p ng-repeat="(id, city) in poiCtrl.cities">
-    City Name: <span ng-bind="city.name"></span><br>
-    City State: <span ng-bind="city.state"></span><br>
-    <img ng-src="{{ city.image }}">
-</p>
+<div ng-if="showFirst">
+    <p ng-repeat="(id, city) in poiCtrl.cities">
+        City Name: <span ng-bind="city.name"></span><br>
+        City State: <span ng-bind="city.state"></span><br>
+        <img ng-src="{{ city.image }}">
+    </p>
+</div>
+
+<div ng-if="!showFirst">
+    <p ng-repeat="(id, city) in poiCtrl.currCities">
+        City Name: <span ng-bind="city.name"></span><br>
+        City State: <span ng-bind="city.state"></span><br>
+        <img ng-src="{{ city.image }}">
+    </p>
+    <h3>{{noMatches}}</h3>
+</div>
