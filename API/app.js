@@ -3,9 +3,9 @@ var express = require('express');//The express module
 var app = express();//The app
 const bodyParser = require('body-parser');
 var DButilsAzure = require('./DButils');//The db utils
-var dataBaseHandler = require('./dataBaseHandler')//The db handler
-var http = require('http')//The http module
-const validation= require('./validation')//The validation module
+var dataBaseHandler = require('./dataBaseHandler');//The db handler
+var http = require('http');//The http module
+const validation= require('./validation');//The validation module
 const jwt = require("jsonwebtoken");//The jwt module
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -28,13 +28,6 @@ app.listen(port, function () {
     console.log('Start listening to port ' + port);
 });
 
-/*
-    A generic sql script with the following structure
-
-    SELECT 'column'
-    FROM 'table'
-
-*/
 app.get('/select/:table/:column', function(req, res){
     var flag =false
     var table = JSON.stringify(req.params.table)
@@ -78,12 +71,12 @@ app.get('/select/:table/:column', function(req, res){
 */
 app.get('/select/:table/:column/:query', function(req, res){
 
-    var flag = false
-    var table = JSON.stringify(req.params.table)
-    table = table.substring(1,table.length-1)
-    var stop = false
-    var column = JSON.stringify(req.params.column)
-    column = column.substring(1,column.length-1)
+    var flag = false;
+    var table = JSON.stringify(req.params.table);
+    table = table.substring(1,table.length-1);
+    var stop = false;
+    var column = JSON.stringify(req.params.column);
+    column = column.substring(1,column.length-1);
     //If the table is pointOfInterest
     if(table==="pointOfInterest")
     {
@@ -109,7 +102,7 @@ app.get('/select/:table/:column/:query', function(req, res){
             {
                 //If the table is question_and_answer
                 if(table === "question_and_answer")
-                    flag = validation.getQuestionAndAnswersByUsername(req,res)
+                    flag = validation.getQuestionAndAnswersByUsername(req,res);
                 else
                 {
                     //If the table is users
@@ -117,10 +110,10 @@ app.get('/select/:table/:column/:query', function(req, res){
                     {
                         if(column ==="password")
                         {
-                            flag = validation.getPasswordByQuestionAndAnswer(req,res)
+                            flag = validation.getPasswordByQuestionAndAnswer(req,res);
                             if(flag)
                             {
-                                dataBaseHandler.getPasswordFromQAUsername(req,res)
+                                dataBaseHandler.getPasswordFromQAUsername(req,res);
                                 stop= true
                             }
                         }
@@ -133,11 +126,11 @@ app.get('/select/:table/:column/:query', function(req, res){
     if(!stop)
     {
         if(flag)
-            dataBaseHandler.selectWithCondition(req,res)
+            dataBaseHandler.selectWithCondition(req,res);
         else
             res.status(400).send("something went wrong with the request")
     }
-})
+});
 
 /*
     A generic sql script with the following structure
@@ -151,8 +144,8 @@ app.post('/insert', function(req, res){
     req.params.values = req.body.values;
 
     var flag = false;
-    var table = JSON.stringify(req.params.table)
-    table = table.substring(1,table.length-1)
+    var table = JSON.stringify(req.params.table);
+    table = table.substring(1,table.length-1);
 
     //If the table is pointOfInterest
     if(table==="reviews")
@@ -186,9 +179,9 @@ app.post('/insert', function(req, res){
         }
     }
     if (!flag)
-        flag = validation.validateFinal(req)
+        flag = validation.validateFinal(req);
     if(flag)
-        dataBaseHandler.postWithoutCondition(req,res)
+        dataBaseHandler.postWithoutCondition(req,res);
     else
         res.status(400).send("something went wrong with the request")
 })
@@ -218,14 +211,14 @@ app.delete('/delete/:table/:condition', function(req, res){
     WHERE 'condition'
 */
 app.put('/update/:table/:values/:condition', function(req, res){
-    var flag = false
-    var table = JSON.stringify(req.params.table)
-    table = table.substring(1,table.length-1)
+    var flag = false;
+    var table = JSON.stringify(req.params.table);
+    table = table.substring(1,table.length-1);
 
     //If the table is pointOfInterest
     if(table==="favorites")
     {
-        flag = validation.isAddFavorites(req,res)
+        flag = validation.isAddFavorites(req,res);
         console.log(table)
     }
     else
@@ -234,7 +227,7 @@ app.put('/update/:table/:values/:condition', function(req, res){
             dataBaseHandler.updateWithCondition(req,res)
     }
     if(flag)
-        dataBaseHandler.updateWithCondition(req,res)
+        dataBaseHandler.updateWithCondition(req,res);
     else
         res.status(400).send("something went wrong with the request")
 
@@ -248,8 +241,8 @@ app.post('/register', function(req, res){
 
     //need to check validation
     var flag = false;
-    var table = JSON.stringify(req.params.table)
-    table  = table.substring(1,table.length-1)
+    var table = JSON.stringify(req.params.table);
+    table  = table.substring(1,table.length-1);
     //If the table is pointOfInterest
 
     if(table==="users")
@@ -304,7 +297,7 @@ function httpInvoke(path,kind)
         path: path,
         method: kind
     };
-    var ans=''
+    var ans='';
 
     http.request(options, function(res) {
         res.setEncoding('utf8');
