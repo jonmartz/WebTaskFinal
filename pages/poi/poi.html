@@ -15,7 +15,8 @@
 
 <!-- display all cities -->
 <div ng-if="showFirst">
-    <p ng-repeat="(id, city) in poiCtrl.cities">
+    <p ng-repeat="(name, category) in poiCtrl.allCategories">
+        
         City Name: <span ng-bind="city.name"></span><br>
         City State: <span ng-bind="city.state"></span><br>
         <img ng-src="{{ city.image }}">
