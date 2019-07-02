@@ -7,8 +7,14 @@ angular.module("myApp")
         2: {name:"Jerusalem", state: "Israel", image: "https://cdni.rt.com/files/2017.12/article/5a3fe04efc7e93cd698b4567.jpg"},
         3: {name:"London", state: "England", image: "http://www.ukguide.co.il/Photos/England/London/British-Royal-Tour.jpg"}
     }
+    $scope.pois={};
     $scope.allCategories={};
     $scope.relevantCategories={};
+    $scope.allPoisNames={};
+    $http.get('http://localhost:3000/select/pointOfInterest/name,city,categoryName/name != '/' ').then(function(response) {
+                $scope.pois = response.data;
+            }
+    )
     $http.get('http://localhost:3000/select/category/name/').then(function(response) {
                 $scope.allCategories = response.data;
             }
