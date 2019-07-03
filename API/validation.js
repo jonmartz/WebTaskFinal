@@ -97,7 +97,7 @@ module.exports.getRankByPOI = getRankByPOI
 //This function checks if the syntax for getQuestionAndAnswersByUsername
 function getQuestionAndAnswersByUsername(req,res)
 {
-    return onlyBy('username') && checkTable(req,'question_and_answer')
+    return onlyBy(req, 'username', true) && checkTable(req,'question_and_answer')
 }
 
 module.exports.getQuestionAndAnswersByUsername =getQuestionAndAnswersByUsername
