@@ -7,10 +7,15 @@ angular.module("myApp")
         2: {name:"Jerusalem", state: "Israel", image: "https://cdni.rt.com/files/2017.12/article/5a3fe04efc7e93cd698b4567.jpg"},
         3: {name:"London", state: "England", image: "http://www.ukguide.co.il/Photos/England/London/British-Royal-Tour.jpg"}
     }
+    $scope.showCurrPoi=false;
     $scope.pois={};
     $scope.allCategories={};
     $scope.relevantCategories={};
     $scope.allPoisNames={};
+    $scope.currPoisByCategory={};
+    $scope.currPoisByName={};
+    $scope.nameVisible=false;
+    $scope.categoryVisible=false;
     /*
     $http.get('http://localhost:3000/select/pointOfInterest/name,city,categoryName/name != '/' ').then(function(response) {
                 $scope.pois = response.data;
@@ -49,7 +54,7 @@ angular.module("myApp")
         for(idx in currentCategories)
         {
             let urlCat=currentCategories[idx].toString();
-            $http.get("http://localhost:3000/select/pointOfInterest/name,categoryName,image/categoryName="+'\''+urlCat+'\'').then(function(response) {
+            $http.get("http://localhost:3000/select/pointOfInterest/name,categoryName,image,rank/categoryName="+'\''+urlCat+'\'').then(function(response) {
                     if(response.data.length !== 0)
                     {
                         myPois[poisIndex]=response.data;
@@ -62,12 +67,66 @@ angular.module("myApp")
         //let arr=[[{a:'a1', d:'d1'},{b:'b1', d:'d1'},{c:'c1', d:'d1'}],[{a:'a2', d:'d2'},{b:'b2', d:'d2'},{c:'c2', d:'d2'}]];
         //TODO: flatten pois array
     }
-    
-    //$scope.filteCategories();
-    //$scope.filteCategories=function()
-    //{
+    $scope.sortByRank=function(){
 
-    //}
+    }
+    $scope.getPoisFromSearch=function()
+    {
+        $scope.nameVisible=false;
+        $scope.categoryVisible=false;
+        if($scope.selection===undefined)
+            alert("please choose your search option");
+        else
+        {
+            let request=$scope.selection;
+            let param=myText.value;
+            if(request === 'name')
+            {
+                let urlName=param.toString();
+                let curr=$scope.currPoisByName;
+                $http.get("http://localhost:3000/select/pointOfInterest/name,categoryName,image,rank/name="+'\''+urlName+'\'').then(function(response) {
+                        curr=response.data;
+                        $scope.currPoisByName=curr;
+                        if(curr.length === 0)
+                            alert("no such category");
+                    }
+                )
+                $scope.nameVisible=true;
+            }
+            else if(request === 'category')
+            {
+                let urlCat=param.toString();
+                let curr=$scope.currPoisByCategory;
+                $http.get("http://localhost:3000/select/pointOfInterest/name,categoryName,image,rank/categoryName="+'\''+urlCat+'\'').then(function(response) {
+                        curr=response.data;
+                        $scope.currPoisByCategory=curr;
+                        if(curr.length === 0)
+                            alert("no such category");
+                    }
+                )
+                
+                $scope.categoryVisible=true;
+            }
+        }
+    }
+    $scope.getPoisByCategory=function(category){
+        let curr=$scope.currPoisByCategory;
+        alert(category);
+        let urlCat=category.toString();
+        $http.get("http://localhost:3000/select/pointOfInterest/name,categoryName,image,rank/categoryName="+'\''+urlCat+'\'').then(function(response) {
+                if(response.data.length !== 0)
+                {
+                    curr=response.data;
+                }
+                else
+                {
+                    curr="No Points Of Interest of this category";
+                }
+            }
+        )
+        $scope.currPoisByCategory=curr;
+    }
+
     $scope.noMatches = "";
     $scope.showFirst=true;
     self.currCities={};
@@ -80,6 +139,24 @@ angular.module("myApp")
     $scope.findCity=function()
     {
         $scope.noMatches = "";
+        let urlname=myText.value.toString();
+        let searchByName=$scope.currPoisByName;
+        alert('\''+urlname+'\'');
+        $http.get("http://localhost:3000/select/pointOfInterest/name,image/name="+'\''+urlname+'\'').then(function(response) {
+                if(response.data.length !== 0)
+                {
+                    searchByName=response.data;
+                }
+                else
+                {
+                    $scope.noMatches = "No Matches Found";
+                }
+            }
+        )
+        $scope.currPoisByName=searchByName;
+        $scope.showCurrPoi=true;
+        /*
+        let curr=$scope.pois;
         for (let [id,city] of Object.entries(self.cities))
         {
             self.currCities[id]=city;
@@ -95,5 +172,6 @@ angular.module("myApp")
         }   
         if((Object.keys(self.currCities).length) === 0)
             $scope.noMatches = "No Matches Found";
+            */
     }
 });

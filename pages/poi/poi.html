@@ -7,27 +7,46 @@
 
 <h2>POI</h2>
 
-<h5>Search Point Of Interest by name:</h5>
+<h5>Search Point Of Interest by:</h5>
+<select ng-model="selection">
+        <option value="name">Name</option>
+        <option value="category">Category</option>
+</select>
 <input type="text" id="myText" ng-model="myText"><br><br>
-<button ng-click="findCity()" >Search</button><br><br>
-<button ng-click="do()" >Show All Cities</button><br>
+<button ng-click="getPoisFromSearch()" >Search</button><br><br>
+<button ng-click="do()" >Show All Points Of Interest</button><br><br>
+<button ng-click="do()" >Order Points Of Interest by Rate</button><br>
+
 
 <!-- display all cities -->
-<!--
-<div ng-if="showFirst">
-    <p ng-repeat="(id, city) in poiCtrl.cities">
-        
-        City Name: <span ng-bind="city.name"></span><br>
-        City State: <span ng-bind="city.state"></span><br>
-        <img ng-src="{{ city.image }}">
+
+<div ng-if="nameVisible">
+    <p ng-repeat="poi in currPoisByName">
+        POI Name: <span ng-bind="poi.name"></span><br>
+        <img ng-src="{{ poi.image }}">
     </p>
 </div>
--->
 
-<div ng-if="showFirst">
+
+<div ng-if="categoryVisible">
+        <p ng-repeat="poi in currPoisByCategory">
+            Point Of Interest Name: <span ng-bind="poi.name"></span><br>
+            <img ng-src="{{ poi.image }}">
+        </p>
+</div>
+
+<div ng-if="!showFirst">
         <p >
-            <h3 ng-repeat="x in allCategories">Category: {{x}}</h3>
-        <p>
+            <!--<h3 ng-repeat="x in allCategories">Category: {{x}}</h3>-->
+            <!--<p>{{getPoisByCategory(x)}}</p>-->
+            <p ng-repeat="x in allCategories">
+                <h3>{{x}}</h3><br>
+               <!-- <p ng-repeat="poi in getPoisByCategory(x)">
+                    Point Name: <span ng-bind="poi.name"></span><br>
+                    <img ng-src="{{ poi.image }}">
+                </p>-->
+            </p>
+        </p>
 
 </div>
 
