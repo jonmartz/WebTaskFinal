@@ -14,22 +14,30 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Headers', '*');
     if (req.method === 'OPTIONS') {
         res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
-        // return res.status(200).json({});
+        return res.status(200).json({});
     }
     next();
 });
 
 // todo: check this on every private function
 app.use("/private", (req, res, next) => {
-    const token = req.header("x-auth-token");
+    console.log(req.headers);
+    const token = req.header('x-auth-token');
     // no token
-    if (!token) res.status(401).send("Access denied. No token provided.");
-    // verify token
-    try {
-        req.decoded = jwt.verify(token, secret);
-        next(); //move on to the actual function
-    } catch (exception) {
-        res.status(400).send("Invalid token.");
+    if (!token) {
+        res.status(400).send("Access denied. No token provided.");
+        console.log('no token provided');
+    }
+    else {
+        // verify token
+        try {
+            req.decoded = jwt.verify(token, secret);
+            console.log('valid token');
+            next(); //move on to the actual function
+        } catch (exception) {
+            res.status(400).send("Invalid token.");
+            console.log('invalid token');
+        }
     }
 });
 
@@ -40,7 +48,7 @@ app.listen(port, function () {
     console.log('Start listening to port ' + port);
 });
 
-app.get('/select/:table/:column', function(req, res){
+app.get('*/select/:table/:column', function(req, res){
     var flag =true;
     var table = JSON.stringify(req.params.table);
     table = table.substring(1,table.length-1);

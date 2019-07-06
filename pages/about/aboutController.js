@@ -2,11 +2,15 @@
 angular.module("myApp")
 .controller("aboutController", function ($scope, $http, $window) {
     $scope.myFunc = function() {
-        $scope.text = $window.sessionStorage.getItem("token");
-        // $http.get('http://localhost:3000/select/countries/name').then(function(response) {
-        //         // $scope.text = "success";
-        //         $scope.text = response.data;
-        //     }
-        // )
+        $http({
+            method: 'GET',
+            url: "http://localhost:3000/private/select/countries/name",
+            headers: {
+                'x-auth-token': $window.sessionStorage.getItem("token")
+            }
+        }).then(function(response) {
+                $scope.text = response.data;
+            }
+        )
     }
 });
