@@ -1,6 +1,6 @@
 // register controller
 angular.module("myApp")
-    .controller("registerController", function ($scope, $http, service) {
+    .controller("registerController", function ($scope, $http, $window, service) {
         self = this;
 
         $scope.countries = service.getCountries();
@@ -66,6 +66,7 @@ angular.module("myApp")
                                 }
                             );
                         }
+                        $window.location.href = "#!login";
                     }
                     , function errorCallback(res) {
                         $scope.answer = "Username already exists!"

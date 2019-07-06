@@ -1,20 +1,21 @@
 let app = angular.module('myApp', ["ngRoute"]);
 
+
+function pageLoaded(){
+    document.getElementById('upperMessageBox').innerHTML = '<- Please login or register';
+}
+
 // config routes
 app.config(function($routeProvider)  {
     $routeProvider
         // homepage
         .when('/', {
-            // this is a template
             template: '<h1>This is the default route</h1>'
         })
-        // about
         .when('/about', {
-            // this is a template url
             templateUrl: 'pages/about/about.html',
             controller : 'aboutController as abtCtrl'
         })
-        // poi
         .when('/poi', {
             templateUrl: 'pages/poi/poi.html',
             controller : 'poiController as poiCtrl'
@@ -26,6 +27,14 @@ app.config(function($routeProvider)  {
         .when('/register', {
             templateUrl: 'pages/register/register.html',
             controller : 'registerController as registerCtrl'
+        })
+        .when('/login', {
+            templateUrl: 'pages/login/login.html',
+            controller : 'loginController as loginCtrl'
+        })
+        .when('/passwordRecovery', {
+            templateUrl: 'pages/passwordRecovery/passwordRecovery.html',
+            controller : 'passwordRecoveryController as passwordRecoveryCtrl'
         })
         // other
         .otherwise({ redirectTo: '/' });
@@ -48,7 +57,7 @@ app.service('service', function() {
             "Switzerland",
             "USA"
         ]
-    }
+    };
 
     this.getCategories = function() {
         return [
@@ -57,8 +66,15 @@ app.service('service', function() {
             "shopping",
             "entertainment"
         ]
-    }
+    };
 
+    /**
+     * Creates a customized body for POST requests
+     * @param table
+     * @param columnsString
+     * @param values
+     * @returns {{columns: *, values: (string|string), table: *}}
+     */
     this.createBody = function(table, columnsString, values){
 
         let valuesString = "";
