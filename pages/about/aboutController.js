@@ -1,13 +1,14 @@
 // about controller
 angular.module("myApp")
-.controller("aboutController", function ($scope, $http) {
-    // button click count
-    $scope.btnCount = 0;
+.controller("aboutController", function ($scope, $http, $window) {
     $scope.myFunc = function() {
-        $scope.btnCount++;
-        $scope.text = "requesting countries...";
-        $http.get('http://localhost:3000/select/countries/name').then(function(response) {
-                // $scope.text = "success";
+        $http({
+            method: 'GET',
+            url: "http://localhost:3000/private/select/countries/name",
+            headers: {
+                'x-auth-token': $window.sessionStorage.getItem("token")
+            }
+        }).then(function(response) {
                 $scope.text = response.data;
             }
         )
