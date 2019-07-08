@@ -7,8 +7,8 @@ angular.module("myApp")
         2: {name:"Jerusalem", state: "Israel", image: "https://cdni.rt.com/files/2017.12/article/5a3fe04efc7e93cd698b4567.jpg"},
         3: {name:"London", state: "England", image: "http://www.ukguide.co.il/Photos/England/London/British-Royal-Tour.jpg"}
     }
-    $scope.showCurrPoi=false;
     $scope.pois={};
+    $scope.poisByRank={};
     $scope.allCategories={};
     $scope.relevantCategories={};
     $scope.allPoisNames={};
@@ -16,15 +16,9 @@ angular.module("myApp")
     $scope.currPoisByName={};
     $scope.nameVisible=false;
     $scope.categoryVisible=false;
-    /*
-    $http.get('http://localhost:3000/select/pointOfInterest/name,city,categoryName/name != '/' ').then(function(response) {
-                $scope.pois = response.data;
-            }
-    )
-    $http.get('http://localhost:3000/select/category/name/').then(function(response) {
-                $scope.allCategories = response.data;
-            }
-    )*/
+    $scope.allCategoriesVisible=false;
+    $scope.byRankVisible=false;
+
     $http.get('http://localhost:3000/select/category/name/').then(function(response) {
                 $scope.allCategories = response.data;
                 let s=$scope.allCategories;
@@ -45,35 +39,56 @@ angular.module("myApp")
                     }
                 }
                 $scope.allCategories=filtered;
+                $scope.catCount=curr;
+                $scope.viewAll();
             }
     )
-    $scope.do=function(){
-        let currentCategories=$scope.allCategories;
+
+
+    $scope.viewAll=function(){
+        $scope.nameVisible=false;
+        $scope.categoryVisible=false;
+        $scope.allCategoriesVisible=false;
+        $scope.byRankVisible=false;
         let myPois=$scope.pois;
-        let poisIndex=0;
-        for(idx in currentCategories)
-        {
-            let urlCat=currentCategories[idx].toString();
-            $http.get("http://localhost:3000/select/pointOfInterest/name,categoryName,image,rank/categoryName="+'\''+urlCat+'\'').then(function(response) {
-                    if(response.data.length !== 0)
-                    {
-                        myPois[poisIndex]=response.data;
-                        poisIndex++;
-                    }
-                }
-            )
-        }
-        $scope.pois=myPois;
-        //let arr=[[{a:'a1', d:'d1'},{b:'b1', d:'d1'},{c:'c1', d:'d1'}],[{a:'a2', d:'d2'},{b:'b2', d:'d2'},{c:'c2', d:'d2'}]];
-        //TODO: flatten pois array
+        $http.get("http://localhost:3000/select/pointOfInterest/name,categoryName,image,rank").then(function(response) {
+                myPois=response.data;
+                $scope.pois=myPois;
+            }
+        )
+        $scope.allCategoriesVisible=true;
     }
+
+    $scope.getPoisByCategory=async function(category)
+    {
+        //let urlCat=category.toString();
+        await $http.get("http://localhost:3000/select/pointOfInterest/name,categoryName,image,rank/categoryName="+'\''+category+'\'').then(function(response) {
+                let x=response.data;
+                if(x[0] !== undefined)
+                    alert(x[0].name);
+                return x;
+            }
+        )
+    }
+
     $scope.sortByRank=function(){
+        $scope.nameVisible=false;
+        $scope.categoryVisible=false;
+        $scope.allCategoriesVisible=false;
+        $scope.byRankVisible=false;
+        let currPois=$scope.pois;
+        var byRank=currPois;
+        byRank.sort(function(a, b) {return parseFloat(b.rank) - parseFloat(a.rank);})
+        $scope.poisByRank=byRank;
+        $scope.byRankVisible=true;
 
     }
     $scope.getPoisFromSearch=function()
     {
         $scope.nameVisible=false;
         $scope.categoryVisible=false;
+        $scope.allCategoriesVisible=false;
+        $scope.byRankVisible=false;
         if($scope.selection===undefined)
             alert("please choose your search option");
         else
@@ -88,7 +103,7 @@ angular.module("myApp")
                         curr=response.data;
                         $scope.currPoisByName=curr;
                         if(curr.length === 0)
-                            alert("no such category");
+                            alert("no such name");
                     }
                 )
                 $scope.nameVisible=true;
@@ -109,69 +124,6 @@ angular.module("myApp")
             }
         }
     }
-    $scope.getPoisByCategory=function(category){
-        let curr=$scope.currPoisByCategory;
-        alert(category);
-        let urlCat=category.toString();
-        $http.get("http://localhost:3000/select/pointOfInterest/name,categoryName,image,rank/categoryName="+'\''+urlCat+'\'').then(function(response) {
-                if(response.data.length !== 0)
-                {
-                    curr=response.data;
-                }
-                else
-                {
-                    curr="No Points Of Interest of this category";
-                }
-            }
-        )
-        $scope.currPoisByCategory=curr;
-    }
 
-    $scope.noMatches = "";
-    $scope.showFirst=true;
-    self.currCities={};
-    $scope.showAll=function()
-    {
-        $scope.getRelevantCategories();
-        $scope.noMatches = "";
-        $scope.showFirst=true;
-    }
-    $scope.findCity=function()
-    {
-        $scope.noMatches = "";
-        let urlname=myText.value.toString();
-        let searchByName=$scope.currPoisByName;
-        alert('\''+urlname+'\'');
-        $http.get("http://localhost:3000/select/pointOfInterest/name,image/name="+'\''+urlname+'\'').then(function(response) {
-                if(response.data.length !== 0)
-                {
-                    searchByName=response.data;
-                }
-                else
-                {
-                    $scope.noMatches = "No Matches Found";
-                }
-            }
-        )
-        $scope.currPoisByName=searchByName;
-        $scope.showCurrPoi=true;
-        /*
-        let curr=$scope.pois;
-        for (let [id,city] of Object.entries(self.cities))
-        {
-            self.currCities[id]=city;
-        } 
-        //let myCities=self.cities;
-        $scope.showFirst=false;
-        for (let [id1,city1] of Object.entries(self.currCities))
-        {
-            if(city1.name !== myText.value)
-            {
-                delete self.currCities[id1];
-            }
-        }   
-        if((Object.keys(self.currCities).length) === 0)
-            $scope.noMatches = "No Matches Found";
-            */
-    }
+
 });

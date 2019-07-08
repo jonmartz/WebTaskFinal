@@ -107,7 +107,7 @@ module.exports.getQuestionAndAnswersByUsername =getQuestionAndAnswersByUsername
 function getPOIByName(req,res)
 {
    
-    return onlyBy(req,'name',true) && checkTable(req,'pointOfInterest')
+    return onlyBy(req,'name',false) && checkTable(req,'pointOfInterest')
 }
 module.exports.getPOIByName = getPOIByName
 //This function checks if the given column name in the request is the same as the given 'columnName'

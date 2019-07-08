@@ -59,6 +59,10 @@ app.get('/select/:table/:column', function(req, res){
             {
                 flag = validation.isGetFromCountries(req,res)
             }
+            else(table === "pointOfInterest")
+            {
+                flag=true;
+            }
         }
 
     }
