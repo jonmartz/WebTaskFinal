@@ -31,6 +31,7 @@ app.config(function($routeProvider)  {
         .when('/pointPage', {
             templateUrl: 'pages/pointPage/pointPage.html',
             controller : 'pointPageController as pointPageCtrl'
+        })
         .when('/login', {
             templateUrl: 'pages/login/login.html',
             controller : 'loginController as loginCtrl'
