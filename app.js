@@ -27,6 +27,10 @@ app.config(function($routeProvider)  {
             templateUrl: 'pages/register/register.html',
             controller : 'registerController as registerCtrl'
         })
+        .when('/pointPage', {
+            templateUrl: 'pages/pointPage/pointPage.html',
+            controller : 'pointPageController as pointPageCtrl'
+        })
         // other
         .otherwise({ redirectTo: '/' });
 });

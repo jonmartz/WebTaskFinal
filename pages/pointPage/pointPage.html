@@ -1,0 +1,19 @@
+<!-- css -->
+<style>
+        img {
+            height: 100px;
+        }
+</style>
+<h2>{{name}}</h2>
+<p ng-repeat="poi in poiInfo">
+    <img ng-src="{{ poi.image }}"><br><br><br>
+    Point Of Interest City: <span ng-bind="poi.city"></span><br>
+    Point Of Interest Rank: <span ng-bind="poi.rank"></span><br>
+    Point Of Interest Number of Viewers: <span ng-bind="poi.numOfViewers"></span><br>
+    Point Of Interest Description: <span ng-bind="poi.description"></span><br>  
+</p><br>
+<h3>Most Recent 2 Reviews:</h3>
+<p ng-repeat="review in relevantInfo">
+    Date: <span ng-bind="review.time"></span><br>
+    Review: <span ng-bind="review.context"></span><br>
+</p>

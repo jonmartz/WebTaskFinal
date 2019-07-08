@@ -72,7 +72,7 @@ module.exports.isPointOfInterestByCategory = isPointOfInterestByCategory
 //This function checks if the syntax for getReviewById is correct
 function getReviewByPOI(req,res)
 {
-    return onlyBy(req,'pointOfInterest',true) && checkTable(req,'reviews')
+    return onlyBy(req,'pointOfInterest',false) && checkTable(req,'reviews')
 }
 
 

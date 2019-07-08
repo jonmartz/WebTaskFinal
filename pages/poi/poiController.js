@@ -125,5 +125,10 @@ angular.module("myApp")
         }
     }
 
+    $scope.goToPointPage=function(name)
+    {        
+        window.open("#!pointPage#"+name,"_self");
+    }
+
 
 });
