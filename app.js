@@ -46,6 +46,8 @@ app.config(function($routeProvider)  {
 
 // custom service
 app.service('service', function() {
+    this.username = "";
+
     this.getCountries = function() {
         return [
             "Australia",
