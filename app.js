@@ -10,7 +10,8 @@ app.config(function($routeProvider)  {
     $routeProvider
         // homepage
         .when('/', {
-            template: '<h1>This is the default route</h1>'
+            templateUrl: 'pages/home/home.html',
+            controller : 'homeController as homeCtrl'
         })
         .when('/about', {
             templateUrl: 'pages/about/about.html',
