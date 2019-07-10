@@ -6,18 +6,19 @@ angular.module("myApp")
                 $scope.text = service.username + " is logged in"
             }
             else {
-                $http({
-                    method: 'GET',
-                    url: "http://localhost:3000/private/select/countries/name",
-                    headers: {
-                        'x-auth-token': $window.sessionStorage.getItem("token")
-                    }
-                }).then(function successCallback(res) {
-                        $scope.text = "valid token. country names: \n" + res.data;
-                    }
-                    , function errorCallback(res) {
-                        $scope.text = "invalid token";
-                    })
+                $scope.text = "no one logged in"
             }
+            // $http({
+            //     method: 'GET',
+            //     url: "http://localhost:3000/private/select/countries/name",
+            //     headers: {
+            //         'x-auth-token': $window.sessionStorage.getItem("token")
+            //     }
+            // }).then(function successCallback(res) {
+            //         $scope.text = "valid token. country names: \n" + res.data;
+            //     }
+            //     , function errorCallback(res) {
+            //         $scope.text = "invalid token";
+            //     })
         }
     });
