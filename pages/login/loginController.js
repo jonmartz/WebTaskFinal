@@ -18,7 +18,7 @@ angular.module("myApp")
 
                     $window.sessionStorage.setItem("token",res.data);
                     $window.location.href = "#!";
-                    document.getElementById('upperMessageBox').innerHTML = '';
+                    document.getElementById('upperMessageBox').innerHTML = "Hello "+$scope.username;
                 }
                 , function errorCallback(res) {
                     $scope.answer = "Incorrect username or password"
