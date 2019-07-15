@@ -1,6 +1,6 @@
 // poi controller
 angular.module("myApp")
-.controller("poiController", function ($scope, $http) {
+.controller("poiController", function ($scope, $http, $window) {
     self = this;
     self.cities = {
         1: {name:"Paris", state: "France", image: "https://media-cdn.tripadvisor.com/media/photo-s/0d/f5/7c/f2/eiffel-tower-priority.jpg"},
@@ -126,8 +126,8 @@ angular.module("myApp")
     }
 
     $scope.goToPointPage=function(name)
-    {        
-        window.open("#!pointPage#"+name,"_self");
+    {
+        $window.location.href = "#!pointPage#"+name;         
     }
 
 

@@ -1,9 +1,10 @@
 angular.module("myApp")
-.controller("pointPageController", function ($scope, $http) {
+.controller("pointPageController", function ($scope, $http, $window) {
     $scope.name=window.location.hash.substring(13);
     $scope.poiInfo={};
     $scope.reviewInfo={};
     $scope.relevantInfo={};
+    $scope.message="";
     $http.get("http://localhost:3000/select/pointOfInterest/city,image,numOfViewers,description,rank/name="+'\''+$scope.name+'\'').then(function(response) {
             $scope.poiInfo=response.data;
         }
@@ -28,22 +29,30 @@ angular.module("myApp")
                 currDates[0]=$scope.reviewInfo[max1Idx];
                 let c0=currDates[0].time;
                 currDates[0].time=(c0.replace(/T/," ")).substring(0, c0.length-1);
-                for(let i=0;i<$scope.reviewInfo.length;i++)
-                {
-                    var a = new Date($scope.getFormattedDate($scope.reviewInfo[i].time));
-                    if(a.getTime() !== max1)
+                if($scope.reviewInfo[1]!==undefined){
+                    for(let i=0;i<$scope.reviewInfo.length;i++)
                     {
-                        if(a.getTime() > max2)
+                        var a = new Date($scope.getFormattedDate($scope.reviewInfo[i].time));
+                        if(a.getTime() !== max1)
                         {
-                            max2=a.getTime();
-                            max2Idx=i;
+                            if(a.getTime() > max2)
+                            {
+                                max2=a.getTime();
+                                max2Idx=i;
+                            }
                         }
                     }
+                    currDates[1]=$scope.reviewInfo[max2Idx];
+                    let c1=currDates[1].time;
+                    currDates[1].time=(c1.replace(/T/," ")).substring(0, c1.length-1);
                 }
-                currDates[1]=$scope.reviewInfo[max2Idx];
-                let c1=currDates[1].time;
-                currDates[1].time=(c1.replace(/T/," ")).substring(0, c1.length-1);
+                else{
+                    $scope.message='There is one review for this point of interest';
+                }
                 $scope.relevantInfo=currDates;
+            }
+            else{
+                $scope.message='There are no reviews for this point of interest';
             }
         }
     )

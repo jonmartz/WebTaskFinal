@@ -1,0 +1,40 @@
+<style>
+        img {
+            height: 100px;
+        }
+</style>
+
+<div ng-if="!isLogged">
+    <h1>Hello Guest</h1>
+    <h3>Three random popular Points Of Interest (points above rank of {{desiredRank}}):</h3>
+    <h5>Set rank limit of your own:</h5>
+    <input type="number" id="chosenRank">
+    <button ng-click="changeRank()">Set Rank!</button>
+    <p ng-repeat="poi in randomPois">
+        Point Of Interest Name: <span ng-bind="poi.name" ng-click="goToPointPage(poi.name)"></span><br>
+        Point Of Interest Category: <span ng-bind="poi.categoryName"></span><br>
+        Point Of Interest Rank: <span ng-bind="poi.rank"></span><br>
+        <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)"><br><br><br>
+    </p>
+</div>
+
+<div ng-if="isLogged">
+    <div class="split left">
+        <div class="centered">
+            <h2>Last Saved Points Of Interest</h2>
+            <h3>{{messageForLogged}}</h3>
+            <p ng-repeat="poi in topPois">
+                Point Of Interest Name: <span ng-bind="poi.name" ng-click="goToPointPage(poi.name)"></span><br>
+                Point Of Interest Category: <span ng-bind="poi.categoryName"></span><br>
+                Point Of Interest Rank: <span ng-bind="poi.rank"></span><br>
+                <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)"><br><br><br>
+            </p>
+        </div>
+    </div>
+            
+    <div class="split right">
+        <div class="centered">
+            <p></p>
+        </div>
+    </div>
+</div>
