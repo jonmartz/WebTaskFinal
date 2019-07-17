@@ -8,6 +8,12 @@ angular.module("myApp")
         $scope.desiredRank=10;
         $scope.loggedUser="";
         $scope.messageForLogged="";
+        $scope.noPoiOfCategoryAlertA="";
+        $scope.noPoiOfCategoryAlertB="";
+        $scope.categoryA="";
+        $scope.categoryB="";
+        $scope.bestA={};
+        $scope.bestB={};
 
         $scope.getFormattedDate=function(d)
         {
@@ -50,8 +56,8 @@ angular.module("myApp")
         }
 
         $scope.handleMember=function(){
-            //let myUser=$scope.loggedUser;
-            let myUser='aaa';
+            let myUser=$scope.loggedUser;
+            //let myUser='aaa';
             let allFavorites={};
             let topRatedPois={};
             let topPoisToShow={};
@@ -112,7 +118,98 @@ angular.module("myApp")
                     
                 }
             )
+            $scope.handleMemberRightScreen();
             
+        }
+
+        $scope.handleMemberRightScreen=function(){
+            
+            var catA="";
+            var catB="";
+            var allPois={}, poisOfA={}, poisOfB={};
+            var bestPoiA={}, bestPoiB={};
+            $http.get("http://localhost:3000/select/category/name/id="+'\''+$scope.loggedUser+'\'').then(function(response) {
+                    catList=response.data;
+                    if(catList.length===1)
+                        catA=catList[0];
+                    if(catList.length > 1)
+                    {
+                        catA=catList[0].name;
+                        catB=catList[1].name;
+                    }
+                    $scope.categoryA=catA;
+                    $scope.categoryB=catB;
+
+                    $http.get("http://localhost:3000/select/pointOfInterest/name,categoryName,image,rank/categoryName="+'\''+catA+'\''+"or categoryName="+'\''+catB+'\'').then(function(response) {
+                            allPois=response.data;
+                            var separatedPois=$scope.separateList(allPois,catA,catB);
+                            poisOfA=separatedPois[0];
+                            poisOfB=separatedPois[1];
+                            if(poisOfA.length===0 || poisOfA===undefined || poisOfA[0]===undefined)
+                            {
+                                $scope.noPoiOfCategoryAlertA="No points of this category";
+                            }
+                            else
+                            {
+                                bestPoiA=$scope.getPoiWithMaxRank(poisOfA);
+                            }
+                            if(poisOfB.length===0 || poisOfB===undefined || poisOfB[0]===undefined)
+                            {
+                                $scope.noPoiOfCategoryAlertB="No points of this category";
+                            }
+                            else
+                            {
+                                bestPoiB=$scope.getPoiWithMaxRank(poisOfB);
+                            }
+                            $scope.bestA=bestPoiA;
+                            $scope.bestB=bestPoiB;
+                            }
+                    )
+                }
+            )
+            
+        }
+
+
+        $scope.separateList=function(lst,catA,catB){
+            var resArr={};
+            var lstA={}, lstB={};
+            var idxA=0, idxB=0;
+            if(lst!==undefined)
+            {
+                for(var i in lst)
+                {
+                    if(lst[i].categoryName===catA)
+                    {
+                        lstA[idxA]=lst[i];
+                        idxA++;
+                    }
+                    else{
+                        if(lst[i].categoryName===catB)
+                        {
+                            lstB[idxB]=lst[i]
+                            idxB++;
+                        }
+                    }
+                }
+            }
+            resArr[0]=lstA;
+            resArr[1]=lstB;
+            return resArr;
+        }
+
+        $scope.getPoiWithMaxRank=function(poisList){
+            var maxIdx=0;
+            var maxRank=poisList[0].rank;
+            for(var i in poisList)
+            {
+                if(poisList[i].rank > maxRank)
+                {
+                    maxRank=poisList[i].rank;
+                    maxIdx=i;
+                }
+            }
+            return poisList[maxIdx];
         }
 
         $scope.changeRank=function(){

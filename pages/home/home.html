@@ -34,7 +34,24 @@
             
     <div class="split right">
         <div class="centered">
-            <p></p>
+            <h2>Most popular points of interest from your prefared categories:</h2>
+            <h3>{{categoryA}}</h3>
+            <p ng-if="noPoiOfCategoryAlertA.length === 0">
+                Point Of Interest Name: <span ng-bind="bestA.name" ng-click="goToPointPage(bestA.name)"></span><br>
+                Point Of Interest Category: <span ng-bind="bestA.categoryName"></span><br>
+                Point Of Interest Rank: <span ng-bind="bestA.rank"></span><br>
+                <img ng-src="{{ bestA.image }}" ng-click="goToPointPage(bestA.name)"><br><br><br>
+            </p>
+            {{noPoiOfCategoryAlertA}}
+            <br>
+            <h3>{{categoryB}}</h3>
+            <p ng-if="noPoiOfCategoryAlertB.length === 0">
+                Point Of Interest Name: <span ng-bind="bestB[0].name" ng-click="goToPointPage(bestB.name)"></span><br>
+                Point Of Interest Category: <span ng-bind="bestB.categoryName"></span><br>
+                Point Of Interest Rank: <span ng-bind="bestB.rank"></span><br>
+                <img ng-src="{{bestB.image }}" ng-click="goToPointPage(bestB.name)"><br><br><br>
+            </p>
+            {{noPoiOfCategoryAlertB}}
         </div>
     </div>
 </div>
