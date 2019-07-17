@@ -1,8 +1,9 @@
 <!-- css -->
+<body onload="pageLoaded()">
 <style>
-        img {
-            height: 100px;
-        }
+    img {
+        height: 200px;
+    }
 </style>
 <h2>{{name}}</h2>
 <p ng-repeat="poi in poiInfo">
@@ -10,10 +11,32 @@
     Point Of Interest City: <span ng-bind="poi.city"></span><br>
     Point Of Interest Rank: <span ng-bind="poi.rank"></span><br>
     Point Of Interest Number of Viewers: <span ng-bind="poi.numOfViewers"></span><br>
-    Point Of Interest Description: <span ng-bind="poi.description"></span><br>  
-</p><br>
+    Point Of Interest Description: <span ng-bind="poi.description"></span><br>
+<div id="notLoggedIn" style="color: #c00000">
+    Please log in to write a review or save to favorites
+</div>
+<br>
+<button ng-click="writeReview()" id="reviewButton">Write a review</button>
+<button ng-click="saveToFavorites()" id="saveButton">Save to favorites</button>
+</p>
+<br>
 <h3>Most Recent 2 Reviews:</h3>
 <p ng-repeat="review in relevantInfo">
     Date: <span ng-bind="review.time"></span><br>
     Review: <span ng-bind="review.context"></span><br>
 </p>
+
+<div ng-controller="modalController as modal"
+     class="modal-container" ng-show="modal.show">
+    <div class="modal-window">
+        <div class="modal-header">
+            Write your review
+        </div>
+        <div class="modal-body">
+            <button ng-click="modal.returnValue('yes')">send</button>
+        </div>
+
+    </div>
+</div>
+
+</body>
