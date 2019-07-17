@@ -65,11 +65,11 @@ angular.module("myApp")
 
         $scope.writeReview=function() {
             modalService.openModal().then(function(data){
-                window.alert(data);
+                window.alert(data.score + ", " + data.text); //todo: send review to database here
             });
         };
 
-        $scope.saveToFavorites=function() {
+        $scope.saveToFavorites=function() { // todo: save POI to favorites here
 
         };
 
@@ -87,10 +87,23 @@ angular.module("myApp")
 
     });
 
+/**
+ * Modal window's controller
+ */
 app.controller('modalController',['modalService','$scope',function(modalService, $scope){
     var vm=this;
     vm.show=modalService.modalOn;							// Flag to show or hide the modal
-    vm.returnValue=modalService.returnValue;	// Reference to the service function to resolve the promise
+
+    /**
+     * run when hitting the send button in the modal window
+     */
+    vm.returnValue = function (){
+        var data = {
+            score: $scope.ratings[0].current,
+            text: $scope.reviewText
+        };
+        modalService.returnValue(data);
+    };
 
     $scope.$on('MODAL_OPEN',function(){
         vm.show=modalService.modalOn;
@@ -99,4 +112,67 @@ app.controller('modalController',['modalService','$scope',function(modalService,
     $scope.$on('MODAL_CLOSE',function(){
         vm.show=modalService.modalOn;
     });
+
+    // For the 5 star rating:
+    $scope.rating = 0;
+    $scope.ratings = [{current: 3, max: 5}];
+
+    $scope.getSelectedRating = function (rating) {
+        console.log(rating);
+    };
+
+    $scope.setMinrate= function(){
+        $scope.ratings = [{current: 1, max: 5}];
+    };
+
+    $scope.setMaxrate= function(){
+        $scope.ratings = [{current: 5, max: 5}];
+    };
+
+    $scope.sendRate = function(){
+        alert("Thanks for your rates!\n\nFirst Rate: " + $scope.ratings[0].current+"/"+$scope.ratings[0].max)
+    }
 }]);
+
+/**
+ * Directive for the star rating
+ */
+app.directive('starRating', function () {
+    return {
+        restrict: 'A',
+        template: '<ul class="rating">' +
+            '<li ng-repeat="star in stars" ng-class="star" ng-click="toggle($index)">' +
+            '\u2605' +
+            '</li>' +
+            '</ul>',
+        scope: {
+            ratingValue: '=',
+            max: '=',
+            onRatingSelected: '&'
+        },
+        link: function (scope, elem, attrs) {
+
+            var updateStars = function () {
+                scope.stars = [];
+                for (var i = 0; i < scope.max; i++) {
+                    scope.stars.push({
+                        filled: i < scope.ratingValue
+                    });
+                }
+            };
+
+            scope.toggle = function (index) {
+                scope.ratingValue = index + 1;
+                scope.onRatingSelected({
+                    rating: index + 1
+                });
+            };
+
+            scope.$watch('ratingValue', function (oldVal, newVal) {
+                if (newVal) {
+                    updateStars();
+                }
+            });
+        }
+    }
+});

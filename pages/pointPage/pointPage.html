@@ -1,5 +1,5 @@
 <!-- css -->
-<body">
+<body>
 <style>
     img {
         height: 200px;
@@ -30,10 +30,20 @@
      class="modal-container" ng-show="modal.show">
     <div class="modal-window">
         <div class="modal-header">
-            Write your review
+            select score:
+            <div class=col-md-12>
+                <div ng-repeat="rating in ratings">
+                    <div star-rating rating-value="rating.current" max="rating.max" on-rating-selected="getSelectedRating(rating)"></div>
+                </div>
+            </div>
+            <br>
+            write your review:
+            <br>
+            <br>
+            <textarea rows="5" cols="50" ng-model="reviewText"></textarea>
         </div>
         <div class="modal-body">
-            <button ng-click="modal.returnValue('yes')">send</button>
+            <button ng-click="modal.returnValue()">send review</button>
         </div>
 
     </div>
