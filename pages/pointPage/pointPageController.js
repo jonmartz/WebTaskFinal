@@ -4,7 +4,7 @@ angular.module("myApp")
     $scope.poiInfo={};
     $scope.reviewInfo={};
     $scope.relevantInfo={};
-    //$scope.message="";
+    $scope.message="";
     $http.get("http://localhost:3000/select/pointOfInterest/city,image,numOfViewers,description,rank/name="+'\''+$scope.name+'\'').then(function(response) {
             $scope.poiInfo=response.data;
         }
