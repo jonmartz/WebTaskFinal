@@ -109,7 +109,7 @@ function postWithoutCondition(req, res){
         {
             parameters = parameters.substring(0,parameters.length - 1) + ', rank, numOfViewers'
             values = values.substring(0,values.length-1)+',  1, 0'
-            if(parameters.length==4)
+            if(parameters.length == 4)
             {
                 parameters += ', image)'
                 values += ', /)'

@@ -80,7 +80,18 @@ angular.module("myApp")
 
         $scope.writeReview=function() {
             modalService.openModal().then(function(data){
-                window.alert(data.score + ", " + data.text); //todo: send review to database here
+                if (data === "cancel") return;
+                columnString = "username+pointOfInterest+context+score";
+                values = [service.username, $scope.name, data.text, data.score];
+                body = service.createBody("reviews",columnString, values);
+                $http.post('http://localhost:3000/insert', body).then(
+                    function successCallback(res) {
+                        window.alert("success")
+                    }
+                    , function errorCallback(res) {
+                        window.alert("failure")
+                    }
+                );
             });
         };
 
@@ -112,7 +123,8 @@ app.controller('modalController',['modalService','$scope',function(modalService,
     /**
      * run when hitting the send button in the modal window
      */
-    vm.returnValue = function (){
+    vm.returnValue = function (cancel){
+        if (cancel) modalService.returnValue("cancel");
         var data = {
             score: $scope.ratings[0].current,
             text: $scope.reviewText

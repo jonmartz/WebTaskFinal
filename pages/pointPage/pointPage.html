@@ -31,20 +31,23 @@
      class="modal-container" ng-show="modal.show">
     <div class="modal-window">
         <div class="modal-header">
-            select score:
+            Select score:
             <div class=col-md-12>
                 <div ng-repeat="rating in ratings">
                     <div star-rating rating-value="rating.current" max="rating.max" on-rating-selected="getSelectedRating(rating)"></div>
                 </div>
             </div>
             <br>
-            write your review:
+            Write your review:
             <br>
             <br>
-            <textarea rows="5" cols="50" ng-model="reviewText"></textarea>
+            <form name="form" ng-submit="modal.returnValue()" novalidate>
+                <textarea rows="5" cols="50" ng-model="reviewText" required></textarea>
+            </form>
         </div>
         <div class="modal-body">
-            <button ng-click="modal.returnValue()">send review</button>
+            <button  ng-disabled="form.$invalid" ng-click="modal.returnValue(false)">Send review</button>
+            <button  ng-click="modal.returnValue(true)" style="float: right; background-color: #a04b51">Cancel</button>
         </div>
 
     </div>
