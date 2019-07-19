@@ -86,10 +86,10 @@ angular.module("myApp")
                 body = service.createBody("reviews",columnString, values);
                 $http.post('http://localhost:3000/insert', body).then(
                     function successCallback(res) {
-                        window.alert("success")
+                        window.alert("Review submitted")
                     }
                     , function errorCallback(res) {
-                        window.alert("failure")
+                        // window.alert("failure")
                     }
                 );
             });
