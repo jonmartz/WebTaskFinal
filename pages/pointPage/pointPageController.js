@@ -138,7 +138,7 @@ angular.module("myApp")
                 body = service.createBody("reviews",columnString, values);
                 $http.post('http://localhost:3000/insert', body).then(
                     function successCallback(res) {
-                        window.alert("Review submitted")
+                        window.alert("Review submitted");
                         updatePoiRank($scope.name);
                     }
                     , function errorCallback(res) {
@@ -159,20 +159,20 @@ angular.module("myApp")
                         sum += scores[i].score/5;
                     }
                     var rank = Math.round((sum/scores.length)*100);
-                    window.alert(scores+", new rank = "+rank);
+                    // window.alert(scores+", new rank = "+rank);
 
                     // update rank
                     $http.put("http://localhost:3000/update/pointOfinterest/rank="+rank+"/name="+poiName).then(
                         function successCallback(res) {
-                            window.alert('success');
+                            // window.alert('success');
                         }
                         , function errorCallback(res) {
-                            window.alert("failed updating rank")
+                            // window.alert("failed updating rank")
                         }
                     );
                 }
                 , function errorCallback(res) {
-                    window.alert("failed getting scores");
+                    // window.alert("failed getting scores");
                 }
             );
         }
