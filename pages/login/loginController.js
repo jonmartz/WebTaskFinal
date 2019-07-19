@@ -20,7 +20,8 @@ angular.module("myApp")
                     $window.location.href = "#!";
                     document.getElementById('upperMessageBox').innerHTML = "Hello "+$scope.username;
                     service.username = $scope.username
-                    $rootScope.favorsToShow = true;   
+                    $rootScope.favorsToShow = true;
+                    $rootScope.favorsCount = 0;   
                 }
                 , function errorCallback(res) {
                     $scope.answer = "Incorrect username or password"

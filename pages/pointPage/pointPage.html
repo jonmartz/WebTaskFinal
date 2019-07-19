@@ -15,6 +15,9 @@
 <div id="notLoggedIn" style="color: #c00000">
     Please log in to write a review or save to favorites
 </div>
+<div ng-if="isLogged">
+    <img ng-src="{{ starPic }}" ng-click="changeStar(name)">
+</div>
 <br>
 <button ng-click="writeReview()" id="reviewButton">Write a review</button>
 <button ng-click="saveToFavorites()" id="saveButton">Save to favorites</button>

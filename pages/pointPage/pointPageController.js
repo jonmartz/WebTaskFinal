@@ -1,10 +1,62 @@
 angular.module("myApp")
-.controller("pointPageController", function ($scope, $http, $window, service, modalService) {
-    $scope.name=window.location.hash.substring(13);
+.controller("pointPageController", function ($scope, $http, $window, service, modalService, $rootScope) {
+    $scope.name="";
     $scope.poiInfo={};
     $scope.reviewInfo={};
     $scope.relevantInfo={};
     $scope.message="";
+    $scope.isFav=false;
+    $scope.starPic="";
+    $scope.isLogged=false;
+
+
+    $scope.changeStar=function(poiName){
+        var currFav=service.favoritesList;
+        if(currFav[poiName] === 'images/emptyStar.png'){
+            currFav[poiName]='images/fullStar.png';
+            $scope.starPic='images/fullStar.png';
+            $rootScope.favorsCount++;
+        }
+        else{
+            if(currFav[poiName] === 'images/fullStar.png'){
+                currFav[poiName]='images/emptyStar.png';
+                $scope.starPic='images/emptyStar.png';
+                $rootScope.favorsCount--;
+            }
+        }
+        service.favoritesList = currFav;
+    }
+
+    $scope.parseUrl=function(url){
+        if(url.includes("_"))
+        {
+            var idx=url.indexOf('_');
+            $scope.name=url.substring(0,idx);
+            $scope.isFav=url.substring(idx+1);
+            if($scope.isFav==='true'){
+                $scope.starPic='images/fullStar.png';
+            }
+            else{
+                if($scope.isFav==='false')
+                    $scope.starPic='images/emptyStar.png';
+            } 
+        }
+        else
+        {
+            $scope.name=url
+        }
+    }
+    $scope.parseUrl(window.location.hash.substring(13));
+
+    if(service.username === "")
+    {
+        $scope.isLogged=false;
+    }
+    else
+    {
+        $scope.isLogged=true;
+    }
+
     $http.get("http://localhost:3000/select/pointOfInterest/city,image,numOfViewers,description,rank/name="+'\''+$scope.name+'\'').then(function(response) {
             $scope.poiInfo=response.data;
         }
