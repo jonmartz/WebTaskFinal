@@ -245,14 +245,9 @@ function updateWithCondition(req, res){
         values= values+', date = '+'\''+getCurrentDateInDateTime2Format()+'\''
     }
     var where=  updateHandleValues(JSON.stringify(req.params.condition))
-    var temp = where.split(",")
-    where = ""
-    for(var i=0;i<temp.length-1;i++)
-    {
-        where+= temp[i] +" AND"
-    }
-    where+= temp[temp.length-1]
-    DButilsAzure.execQuery("UPDATE "+req.params.table+" SET "+values+" WHERE "+where+";")
+    where = where.split(",").join(" AND ");
+    var query = "UPDATE "+req.params.table+" SET "+values+" WHERE "+where+";";
+    DButilsAzure.execQuery(query)
     .then(function(result){
         res.status(201).send(result)
     })

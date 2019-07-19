@@ -9,7 +9,7 @@ angular.module("myApp")
             $scope.poiInfo=response.data;
         }
     );
-    $http.get("http://localhost:3000/select/reviews/time,context/pointOfInterest="+'\''+$scope.name+'\'').then(function(response) {
+    $http.get("http://localhost:3000/select/reviews/time,context,score/pointOfInterest="+'\''+$scope.name+'\'').then(function(response) {
             $scope.reviewInfo=response.data;
             if($scope.reviewInfo[0]!==undefined)
             {
@@ -87,6 +87,7 @@ angular.module("myApp")
                 $http.post('http://localhost:3000/insert', body).then(
                     function successCallback(res) {
                         window.alert("Review submitted")
+                        updatePoiRank($scope.name);
                     }
                     , function errorCallback(res) {
                         // window.alert("failure")
@@ -94,6 +95,35 @@ angular.module("myApp")
                 );
             });
         };
+
+        function updatePoiRank(poiName){ // todo: check this works
+            $http.get("http://localhost:3000/select/reviews/score/pointOfInterest='"+poiName+"'").then(
+                function successCallback(res) {
+                    var scores = res.data;
+
+                    // calculate new rank
+                    var sum = 0;
+                    for (var i = 0; i < scores.length; i++){
+                        sum += scores[i].score/5;
+                    }
+                    var rank = Math.round((sum/scores.length)*100);
+                    window.alert(scores+", new rank = "+rank);
+
+                    // update rank
+                    $http.put("http://localhost:3000/update/pointOfinterest/rank="+rank+"/name="+poiName).then(
+                        function successCallback(res) {
+                            window.alert('success');
+                        }
+                        , function errorCallback(res) {
+                            window.alert("failed updating rank")
+                        }
+                    );
+                }
+                , function errorCallback(res) {
+                    window.alert("failed getting scores");
+                }
+            );
+        }
 
         $scope.saveToFavorites=function() { // todo: save POI to favorites here
 
