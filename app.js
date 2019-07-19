@@ -1,4 +1,4 @@
-let app = angular.module('myApp', ["ngRoute"])
+let app = angular.module('myApp', ["ngRoute"]);
 
 
 function pageLoaded(){
@@ -52,6 +52,7 @@ app.config(function($routeProvider)  {
 // custom service
 app.service('service', function() {
     this.username = "";
+    this.favoritesList = {};
 
     this.getCountries = function() {
         return [

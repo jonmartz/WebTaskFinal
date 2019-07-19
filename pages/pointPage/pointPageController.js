@@ -148,7 +148,7 @@ angular.module("myApp")
             });
         };
 
-        function updatePoiRank(poiName){ // todo: check this works
+        function updatePoiRank(poiName){
             $http.get("http://localhost:3000/select/reviews/score/pointOfInterest='"+poiName+"'").then(
                 function successCallback(res) {
                     var scores = res.data;
@@ -176,10 +176,6 @@ angular.module("myApp")
                 }
             );
         }
-
-        $scope.saveToFavorites=function() { // todo: save POI to favorites here
-
-        };
 
         var vm=this;
         vm.show=modalService.modalOn;							// Flag to show or hide the modal

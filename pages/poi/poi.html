@@ -24,10 +24,11 @@
         Point Of Interest Name: <span ng-bind="poi.name" ng-click="goToPointPage(poi.name)"></span><br>
         Point Of Interest Category: <span ng-bind="poi.categoryName"></span><br>
         Point Of Interest Rank: <span ng-bind="poi.rank"></span><br>
-        <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)"><br><br><br>
-        <div ng-if="isLogged">
-            <img ng-src="{{ favorites[poi.name] }}" ng-click="changeStar(poi.name)"><br><br><br><br><br>
-        </div>
+        <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)">
+        <span ng-if="isLogged">
+            <img ng-src="{{ favorites[poi.name] }}" ng-click="changeStar(poi.name)"
+                 style="height: 50px; vertical-align: top; margin-left: -50px"><br><br><br><br><br>
+        </span>
     </div>
 </div>
 
@@ -37,10 +38,11 @@
             Point Of Interest Name: <span ng-bind="poi.name" ng-click="goToPointPage(poi.name)"></span><br>
             Point Of Interest Category: <span ng-bind="poi.categoryName"></span><br>
             Point Of Interest Rank: <span ng-bind="poi.rank"></span><br>
-            <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)"><br><br><br>
-            <div ng-if="isLogged">
-                <img ng-src="{{ favorites[poi.name] }}" ng-click="changeStar(poi.name)"><br><br><br><br><br>
-            </div>
+            <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)">
+            <span ng-if="isLogged">
+                <img ng-src="{{ favorites[poi.name] }}" ng-click="changeStar(poi.name)"
+                     style="height: 50px; vertical-align: top; margin-left: -50px"><br><br><br><br><br>
+            </span>
         </div>
 </div>
 
@@ -50,10 +52,11 @@
             Point Of Interest Name: <span ng-bind="poi.name" ng-click="goToPointPage(poi.name)"></span><br>
             Point Of Interest Category: <span ng-bind="poi.categoryName"></span><br>
             Point Of Interest Rank: <span ng-bind="poi.rank"></span><br>
-            <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)"><br><br><br>
-            <div ng-if="isLogged">
-                <img ng-src="{{ favorites[poi.name] }}" ng-click="changeStar(poi.name)"><br><br><br><br><br>
-            </div>
+            <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)">
+            <span ng-if="isLogged">
+                <img ng-src="{{ favorites[poi.name] }}" ng-click="changeStar(poi.name)"
+                     style="height: 50px; vertical-align: top; margin-left: -50px"><br><br><br><br><br>
+            </span>
         </div>
 </div>
 
@@ -64,10 +67,11 @@
             <div ng-if="poi.categoryName===x">
                 Point Of Interest Name: <span ng-bind="poi.name" ng-click="goToPointPage(poi.name)"></span><br>
                 Point Of Interest Rank: <span ng-bind="poi.rank"></span><br>
-                <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)"><br><br><br>
-                <div ng-if="isLogged">
-                    <img ng-src="{{ favorites[poi.name] }}" ng-click="changeStar(poi.name)"><br><br><br><br><br>
-                </div>
+                <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)">
+                <span ng-if="isLogged">
+                    <img ng-src="{{ favorites[poi.name] }}" ng-click="changeStar(poi.name)"
+                         style="height: 50px; vertical-align: top; margin-left: -50px"><br><br><br><br><br>
+                </span>
             </div>
         </div>
         
