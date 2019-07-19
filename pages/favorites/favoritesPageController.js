@@ -28,6 +28,5 @@ angular.module("myApp")
         }
 
         $scope.updateFav();
-        $scope.sortByRank();
         
     });
