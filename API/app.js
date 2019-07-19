@@ -202,7 +202,8 @@ app.put('/update/:table/:values/:condition', function(req, res){
         if(table === "pointOfInterest")
             dataBaseHandler.updateWithCondition(req,res)
     }
-    if(flag)
+    if(flag) flag = true;
+    if(!flag)
         dataBaseHandler.updateWithCondition(req,res);
     else
         res.status(400).send("something went wrong with the request")

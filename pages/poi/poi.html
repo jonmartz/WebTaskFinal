@@ -20,32 +20,41 @@
 
 
 <div ng-if="nameVisible">
-    <p ng-repeat="poi in currPoisByName">
+    <div ng-repeat="poi in currPoisByName">
         Point Of Interest Name: <span ng-bind="poi.name" ng-click="goToPointPage(poi.name)"></span><br>
         Point Of Interest Category: <span ng-bind="poi.categoryName"></span><br>
         Point Of Interest Rank: <span ng-bind="poi.rank"></span><br>
         <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)"><br><br><br>
-    </p>
+        <div ng-if="isLogged">
+            <img ng-src="{{ favorites[poi.name] }}" ng-click="changeStar(poi.name)"><br><br><br><br><br>
+        </div>
+    </div>
 </div>
 
 
 <div ng-if="categoryVisible">
-        <p ng-repeat="poi in currPoisByCategory">
+        <div ng-repeat="poi in currPoisByCategory">
             Point Of Interest Name: <span ng-bind="poi.name" ng-click="goToPointPage(poi.name)"></span><br>
             Point Of Interest Category: <span ng-bind="poi.categoryName"></span><br>
             Point Of Interest Rank: <span ng-bind="poi.rank"></span><br>
             <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)"><br><br><br>
-        </p>
+            <div ng-if="isLogged">
+                <img ng-src="{{ favorites[poi.name] }}" ng-click="changeStar(poi.name)"><br><br><br><br><br>
+            </div>
+        </div>
 </div>
 
 
 <div ng-if="byRankVisible">
-        <p ng-repeat="poi in poisByRank">
+        <div ng-repeat="poi in poisByRank">
             Point Of Interest Name: <span ng-bind="poi.name" ng-click="goToPointPage(poi.name)"></span><br>
             Point Of Interest Category: <span ng-bind="poi.categoryName"></span><br>
             Point Of Interest Rank: <span ng-bind="poi.rank"></span><br>
             <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)"><br><br><br>
-        </p>
+            <div ng-if="isLogged">
+                <img ng-src="{{ favorites[poi.name] }}" ng-click="changeStar(poi.name)"><br><br><br><br><br>
+            </div>
+        </div>
 </div>
 
 <div ng-if="allCategoriesVisible">
@@ -55,7 +64,10 @@
             <div ng-if="poi.categoryName===x">
                 Point Of Interest Name: <span ng-bind="poi.name" ng-click="goToPointPage(poi.name)"></span><br>
                 Point Of Interest Rank: <span ng-bind="poi.rank"></span><br>
-                <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)"><br><br><br>  
+                <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)"><br><br><br>
+                <div ng-if="isLogged">
+                    <img ng-src="{{ favorites[poi.name] }}" ng-click="changeStar(poi.name)"><br><br><br><br><br>
+                </div>
             </div>
         </div>
         

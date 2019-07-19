@@ -1,15 +1,67 @@
 angular.module("myApp")
-.controller("pointPageController", function ($scope, $http, $window, service, modalService) {
-    $scope.name=window.location.hash.substring(13);
+.controller("pointPageController", function ($scope, $http, $window, service, modalService, $rootScope) {
+    $scope.name="";
     $scope.poiInfo={};
     $scope.reviewInfo={};
     $scope.relevantInfo={};
     $scope.message="";
+    $scope.isFav=false;
+    $scope.starPic="";
+    $scope.isLogged=false;
+
+
+    $scope.changeStar=function(poiName){
+        var currFav=service.favoritesList;
+        if(currFav[poiName] === 'images/emptyStar.png'){
+            currFav[poiName]='images/fullStar.png';
+            $scope.starPic='images/fullStar.png';
+            $rootScope.favorsCount++;
+        }
+        else{
+            if(currFav[poiName] === 'images/fullStar.png'){
+                currFav[poiName]='images/emptyStar.png';
+                $scope.starPic='images/emptyStar.png';
+                $rootScope.favorsCount--;
+            }
+        }
+        service.favoritesList = currFav;
+    }
+
+    $scope.parseUrl=function(url){
+        if(url.includes("_"))
+        {
+            var idx=url.indexOf('_');
+            $scope.name=url.substring(0,idx);
+            $scope.isFav=url.substring(idx+1);
+            if($scope.isFav==='true'){
+                $scope.starPic='images/fullStar.png';
+            }
+            else{
+                if($scope.isFav==='false')
+                    $scope.starPic='images/emptyStar.png';
+            } 
+        }
+        else
+        {
+            $scope.name=url
+        }
+    }
+    $scope.parseUrl(window.location.hash.substring(13));
+
+    if(service.username === "")
+    {
+        $scope.isLogged=false;
+    }
+    else
+    {
+        $scope.isLogged=true;
+    }
+
     $http.get("http://localhost:3000/select/pointOfInterest/city,image,numOfViewers,description,rank/name="+'\''+$scope.name+'\'').then(function(response) {
             $scope.poiInfo=response.data;
         }
     );
-    $http.get("http://localhost:3000/select/reviews/time,context/pointOfInterest="+'\''+$scope.name+'\'').then(function(response) {
+    $http.get("http://localhost:3000/select/reviews/time,context,score/pointOfInterest="+'\''+$scope.name+'\'').then(function(response) {
             $scope.reviewInfo=response.data;
             if($scope.reviewInfo[0]!==undefined)
             {
@@ -86,7 +138,8 @@ angular.module("myApp")
                 body = service.createBody("reviews",columnString, values);
                 $http.post('http://localhost:3000/insert', body).then(
                     function successCallback(res) {
-                        window.alert("Review submitted")
+                        window.alert("Review submitted");
+                        updatePoiRank($scope.name);
                     }
                     , function errorCallback(res) {
                         // window.alert("failure")
@@ -94,6 +147,35 @@ angular.module("myApp")
                 );
             });
         };
+
+        function updatePoiRank(poiName){ // todo: check this works
+            $http.get("http://localhost:3000/select/reviews/score/pointOfInterest='"+poiName+"'").then(
+                function successCallback(res) {
+                    var scores = res.data;
+
+                    // calculate new rank
+                    var sum = 0;
+                    for (var i = 0; i < scores.length; i++){
+                        sum += scores[i].score/5;
+                    }
+                    var rank = Math.round((sum/scores.length)*100);
+                    // window.alert(scores+", new rank = "+rank);
+
+                    // update rank
+                    $http.put("http://localhost:3000/update/pointOfinterest/rank="+rank+"/name="+poiName).then(
+                        function successCallback(res) {
+                            // window.alert('success');
+                        }
+                        , function errorCallback(res) {
+                            // window.alert("failed updating rank")
+                        }
+                    );
+                }
+                , function errorCallback(res) {
+                    // window.alert("failed getting scores");
+                }
+            );
+        }
 
         $scope.saveToFavorites=function() { // todo: save POI to favorites here
 
