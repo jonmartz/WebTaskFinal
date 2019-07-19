@@ -1,6 +1,6 @@
 // poi controller
 angular.module("myApp")
-.controller("poiController", function ($scope, $http, $window) {
+.controller("poiController", function ($scope, $http, $window, service, $rootScope) {
     self = this;
     self.cities = {
         1: {name:"Paris", state: "France", image: "https://media-cdn.tripadvisor.com/media/photo-s/0d/f5/7c/f2/eiffel-tower-priority.jpg"},
@@ -18,6 +18,18 @@ angular.module("myApp")
     $scope.categoryVisible=false;
     $scope.allCategoriesVisible=false;
     $scope.byRankVisible=false;
+    $scope.favorites={};
+    $scope.isLogged="";
+
+
+    if(service.username === "")
+    {
+        $scope.isLogged=false;
+    }
+    else
+    {
+        $scope.isLogged=true;
+    }
 
     $http.get('http://localhost:3000/select/category/name/').then(function(response) {
                 $scope.allCategories = response.data;
@@ -45,6 +57,36 @@ angular.module("myApp")
     )
 
 
+    $scope.addFav=function(){
+        var currAll=$scope.pois;
+        var currFav=$scope.favorites;
+        for(var i in currAll)
+        {
+            let myName=currAll[i].name;
+            if(currFav[myName]===undefined)
+                currFav[myName]='images/emptyStar.png';
+        }
+        $scope.favorites=currFav;
+        service.favoritesList = $scope.favorites;
+    }
+
+    $scope.changeStar=function(poiName){
+        var currFav=$scope.favorites;
+        if(currFav[poiName] === 'images/emptyStar.png'){
+            currFav[poiName]='images/fullStar.png';
+            $rootScope.favorsCount++;
+        }
+        else{
+            if(currFav[poiName] === 'images/fullStar.png'){
+                currFav[poiName]='images/emptyStar.png';
+                $rootScope.favorsCount--;
+            }
+        }
+        $scope.favorites=currFav;
+        service.favoritesList = $scope.favorites;
+    }
+    
+
     $scope.viewAll=function(){
         $scope.nameVisible=false;
         $scope.categoryVisible=false;
@@ -54,9 +96,12 @@ angular.module("myApp")
         $http.get("http://localhost:3000/select/pointOfInterest/name,categoryName,image,rank").then(function(response) {
                 myPois=response.data;
                 $scope.pois=myPois;
+                $scope.addFav();
             }
         )
         $scope.allCategoriesVisible=true;
+        if(service.favoritesList!==undefined)
+            $scope.favorites=service.favoritesList;
     }
 
     $scope.getPoisByCategory=async function(category)
@@ -69,6 +114,8 @@ angular.module("myApp")
                 return x;
             }
         )
+        if(service.favoritesList!==undefined)
+            $scope.favorites=service.favoritesList;
     }
 
     $scope.sortByRank=function(){
@@ -81,6 +128,8 @@ angular.module("myApp")
         byRank.sort(function(a, b) {return parseFloat(b.rank) - parseFloat(a.rank);})
         $scope.poisByRank=byRank;
         $scope.byRankVisible=true;
+        if(service.favoritesList!==undefined)
+            $scope.favorites=service.favoritesList;
 
     }
     $scope.getPoisFromSearch=function()
@@ -122,12 +171,18 @@ angular.module("myApp")
                 
                 $scope.categoryVisible=true;
             }
+            if(service.favoritesList!==undefined)
+                $scope.favorites=service.favoritesList;
         }
     }
 
     $scope.goToPointPage=function(name)
     {
-        $window.location.href = "#!pointPage#"+name;         
+        var currFavs=$scope.favorites;
+        var flag=false;
+        if(currFavs[name]==='images/fullStar.png')
+            flag=true;
+        $window.location.href = "#!pointPage#"+name+"_"+flag;         
     }
 
 
