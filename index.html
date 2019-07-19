@@ -17,6 +17,7 @@
         <script src="pages/http/httpController.js"></script>
         <script src="pages/register/registerController.js"></script>
         <script src="pages/pointPage/pointPageController.js"></script>
+        <script src="pages/favorites/favoritesPageController.js"></script>
         <script src="pages/login/loginController.js"></script>
         <script src="pages/passwordRecovery/passwordRecoveryController.js"></script>
         <script src="pages/home/homeController.js"></script>
@@ -30,6 +31,7 @@
             <div class="menuItem"><a href="#!about">About</a></div>
             <div class="menuItem"><a href="#!poi">POI</a></div>
             <div class="menuItem"><a href="#!login">Login</a></div>
+            <div class="menuItem" ng-init="favorsToShow=false" ng-show="favorsToShow" id="favorMenu"><a href="#!favorites">Favorites</a></div>
             <label style="float: left; display: block; color: #adc4ff; text-align: center; padding: 10px;"
                    id="upperMessageBox"></label>
         </div>

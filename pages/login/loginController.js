@@ -1,5 +1,5 @@
 angular.module("myApp")
-    .controller("loginController", function ($scope, $http, $window, service) {
+    .controller("loginController", function ($scope, $http, $window, service, $rootScope) {
         self = this;
 
         $scope.submit = function(){
@@ -20,6 +20,7 @@ angular.module("myApp")
                     $window.location.href = "#!";
                     document.getElementById('upperMessageBox').innerHTML = "Hello "+$scope.username;
                     service.username = $scope.username
+                    $rootScope.favorsToShow = true;   
                 }
                 , function errorCallback(res) {
                     $scope.answer = "Incorrect username or password"

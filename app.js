@@ -41,6 +41,10 @@ app.config(function($routeProvider)  {
             templateUrl: 'pages/passwordRecovery/passwordRecovery.html',
             controller : 'passwordRecoveryController as passwordRecoveryCtrl'
         })
+        .when('/favorites', {
+            templateUrl: 'pages/favorites/favoritesPage.html',
+            controller : 'favoritesPageController as favoritesPageCtrl'
+        })
         // other
         .otherwise({ redirectTo: '/' });
 });

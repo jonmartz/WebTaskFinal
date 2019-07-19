@@ -1,0 +1,15 @@
+<div>
+    <button ng-click="sortByRank()">sort by rank</button>
+    <button ng-click="sortByCategory()">sort by category</button>
+</div>
+<div  ng-repeat="poi in favorPois">    
+    <div>
+        Point Of Interest Name: <span ng-bind="poi.name" ng-click="goToPointPage(poi.name)"></span><br>
+        Point Of Interest Rank: <span ng-bind="poi.rank"></span><br>
+        Point Of Interest category: <span ng-bind="poi.categoryName"></span><br>
+        <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)" width="200px" height="200px"><br><br><br>  
+        <button ng-click="removeFromFavorites(poi.name)">remove {{poi.name}} from favorites</button>
+        <br>
+        <br>
+    </div>
+</div>
