@@ -15,6 +15,10 @@
         Point Of Interest Category: <span ng-bind="poi.categoryName"></span><br>
         Point Of Interest Rank: <span ng-bind="poi.rank"></span><br>
         <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)"><br><br><br>
+        <span ng-if="isLogged">
+            <img ng-src="{{ favorites[poi.name] }}" ng-click="changeStar(poi.name)"
+                 style="height: 50px; vertical-align: top; margin-left: -50px">
+        </span>
     </p>
 </div>
 
@@ -28,6 +32,10 @@
                 Point Of Interest Category: <span ng-bind="poi.categoryName"></span><br>
                 Point Of Interest Rank: <span ng-bind="poi.rank"></span><br>
                 <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)"><br><br><br>
+                <span ng-if="isLogged">
+                    <img ng-src="{{ favorites[poi.name] }}" ng-click="changeStar(poi.name)"
+                         style="height: 50px; vertical-align: top; margin-left: -50px">
+                </span>
             </p>
         </div>
     </div>
@@ -44,6 +52,10 @@
                 Point Of Interest Category: <span ng-bind="bestA.categoryName"></span><br>
                 Point Of Interest Rank: <span ng-bind="bestA.rank"></span><br>
                 <img ng-src="{{ bestA.image }}" ng-click="goToPointPage(bestA.name)"><br><br><br>
+                <span ng-if="isLogged">
+                    <img ng-src="{{ favorites[bestA.name] }}" ng-click="changeStar(bestA.name)"
+                         style="height: 50px; vertical-align: top; margin-left: -50px">
+                </span>
             </p>
             {{noPoiOfCategoryAlertA}}
             <br>
@@ -53,6 +65,10 @@
                 Point Of Interest Category: <span ng-bind="bestB.categoryName"></span><br>
                 Point Of Interest Rank: <span ng-bind="bestB.rank"></span><br>
                 <img ng-src="{{bestB.image }}" ng-click="goToPointPage(bestB.name)"><br><br><br>
+                <span ng-if="isLogged">
+                    <img ng-src="{{ favorites[bestB.name] }}" ng-click="changeStar(bestB.name)"
+                         style="height: 50px; vertical-align: top; margin-left: -50px">
+                </span>
             </p>
             {{noPoiOfCategoryAlertB}}
         </div>

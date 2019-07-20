@@ -1,5 +1,5 @@
 angular.module("myApp")
-    .controller("homeController", function ($scope, $http, $window, service) {
+    .controller("homeController", function ($scope, $http, $window, service, $rootScope) {
         $scope.greeting="";
         $scope.allPois={};
         $scope.randomPois={};
@@ -14,11 +14,32 @@ angular.module("myApp")
         $scope.categoryB="";
         $scope.bestA={};
         $scope.bestB={};
+        $scope.favorites={};
+
+
+        if(service.favoritesList!==undefined)
+            $scope.favorites=service.favoritesList;
 
         $scope.getFormattedDate=function(d)
         {
             var d3=d.replace(/Z/g,"");
             return d3;
+        }
+
+        $scope.changeStar=function(poiName){
+            var currFav=$scope.favorites;
+            if(currFav[poiName] === 'images/emptyStar.png'){
+                currFav[poiName]='images/fullStar.png';
+                $rootScope.favorsCount++;
+            }
+            else{
+                if(currFav[poiName] === 'images/fullStar.png'){
+                    currFav[poiName]='images/emptyStar.png';
+                    $rootScope.favorsCount--;
+                }
+            }
+            $scope.favorites=currFav;
+            service.favoritesList = $scope.favorites;
         }
 
         $scope.handleGuest=function()
