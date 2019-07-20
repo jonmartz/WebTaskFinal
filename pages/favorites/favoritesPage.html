@@ -1,19 +1,32 @@
 <div>
-    <button ng-click="setFavortieListDB()">save your favorite points</button>
     <button ng-click="sortByRank()">sort by rank</button>
     <button ng-click="sortByCategory()">sort by category</button>
+    <button ng-click="sortByManual()">personal sorting</button>
+    <br>
+    <br>
+    <button ng-click="setFavortieListDB()" style="background-color: #263eff">save your favorite points</button>
+    <br>
+    <br>
+    <i style="color: #de271e">To remove a point of interest from this list, click the image and click the star icon</i>
+    <br>
+    <br>
+    <br>
 </div>
-<div  ng-repeat="poi in favorPois">    
+<div  ng-repeat="poi in favorPois">
     <div>
-        Point Of Interest Name: <span ng-bind="poi.name" ng-click="goToPointPage(poi.name)"></span><br>
-        Point Of Interest Rank: <span ng-bind="poi.rank"></span><br>
-        Point Of Interest category: <span ng-bind="poi.categoryName"></span><br>
-        <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)" width="200px" height="200px">
-        <img ng-src="{{ service.favoritesList[poi.name] }}" ng-click="changeStar(poi.name)"
-             style="height: 50px; vertical-align: top; margin-left: -50px">
+        <b><span ng-bind="poi.name" ng-click="goToPointPage(poi.name)"></span></b><br>
+        <i>
+            Rank: <span ng-bind="poi.rank"></span><br>
+            Category: <span ng-bind="poi.categoryName"></span><br>
+        </i>
+        <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)" height="100px">
+        <span ng-if="manualOrdering">
+            <img ng-src="images/upArrow.png" ng-click="moveUp(poi.name)" style="height: 30px; vertical-align: top; cursor: pointer;">
+            <img ng-src="images/downArrow.png" ng-click="moveDown(poi.name)" style="height: 30px; vertical-align: bottom; margin-left: -50px; cursor: pointer;">
+        </span>
         <br><br><br>
-<!--        <button ng-click="removeFromFavorites(poi.name)">remove {{poi.name}} from favorites</button>-->
-<!--        <br>-->
-<!--        <br>-->
+        <!--        <button ng-click="removeFromFavorites(poi.name)">remove {{poi.name}} from favorites</button>-->
+        <!--        <br>-->
+        <!--        <br>-->
     </div>
 </div>
