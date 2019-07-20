@@ -68,6 +68,7 @@ angular.module("myApp")
         }
         $scope.favorites=currFav;
         service.favoritesList = $scope.favorites;
+        service.poisData = $scope.pois;
     }
 
     $scope.changeStar=function(poiName){

@@ -51,6 +51,7 @@ app.config(function($routeProvider)  {
 
 // custom service
 app.service('service', function() {
+    this.fPois = [];
     this.username = "";
     this.favoritesList = {};
 

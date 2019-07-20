@@ -37,7 +37,11 @@ angular.module("myApp")
                             //  a list with all the names of the favorite pois saved in DB (use res.data[i].name to get
                             //  the name of poi number i from the list).
                             //  Also, update  $rootScope.favorsCount = [number of favorites] and not 0 like I did there
-                            $rootScope.favorsCount = 0;
+                            var favList = service.favoritesList;
+                            for(var i in res.data){
+                                favList[res.data[i].name] = 'images/fullStar.png';
+                            }
+                            $rootScope.favorsCount = res.data.length;
                         });
                 }
                 , function errorCallback(res) {
