@@ -7,6 +7,7 @@ angular.module("myApp")
             document.getElementById('upperMessageBox').innerHTML = '<- Please login or register';
             document.getElementById('loginMenuEntry').innerHTML = "Log-in";
             $rootScope.favorsToShow = false;
+            service.favoritesList = {};
         }
 
         $scope.submit = function(){
