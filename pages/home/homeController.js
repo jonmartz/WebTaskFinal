@@ -18,9 +18,7 @@ angular.module("myApp")
 
 
         if(service.favoritesList!==undefined)
-        {
             $scope.favorites=service.favoritesList;
-        }
 
         $scope.getFormattedDate=function(d)
         {
