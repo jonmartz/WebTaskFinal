@@ -36,16 +36,34 @@ angular.module("myApp")
                         .then(function successCallback(res){
                             $http.get("http://localhost:3000/select/pointOfInterest/name,categoryName,image,rank").then(function(response) {
                                     service.poisData=response.data;
+
+                                    var allPois=response.data;
+                                    var favList={};//service.favoritesList;
+                                    $rootScope.favorsCount=0;
+                                    var myResult=res.data;
+
+                                    for(var i in allPois){
+                                        let myName=allPois[i].name;
+                                        if(favList[myName]===undefined)
+                                            favList[myName]='images/emptyStar.png';
+                                    }
+
+
+                                    for(var i in myResult){
+                                        favList[myResult[i].name] = 'images/fullStar.png';
+                                        $rootScope.favorsCount++;
+                                    }
+                                    
+                                    service.favoritesList=favList;
+                                    
                                 }
                             );
-                            var favList={};//service.favoritesList;
-                            $rootScope.favorsCount=0;
-                            var myResult=res.data;
-                            for(var i in myResult){
-                                favList[myResult[i].name] = 'images/fullStar.png';
-                                $rootScope.favorsCount++;
-                            }
-                            service.favoritesList=favList;
+                            
+
+                            //----------------------------------------------------------
+
+                            //-----------------------------------------------------------
+
                             $http.get('http://localhost:3000/select/favorites/point_of_interest,sortingOrder/username=' +'\'' + service.username + '\'')
                             .then(function successCallback(result){
                                 var ret=result.data;
