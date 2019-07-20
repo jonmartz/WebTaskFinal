@@ -245,7 +245,13 @@ angular.module("myApp")
 
         $scope.goToPointPage=function(name)
         {
-            $window.location.href = "#!pointPage#"+name;        
+            var currFavs=$scope.favorites;
+            var flag=false;
+            if(currFavs[name]==='images/fullStar.png')
+                flag=true;
+            $window.location.href = "#!pointPage#"+name+"_"+flag;   
+
+           // $window.location.href = "#!pointPage#"+name;        
         }
 
         if(service.username === "")
