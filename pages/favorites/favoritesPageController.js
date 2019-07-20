@@ -39,8 +39,6 @@ angular.module("myApp")
             // todo: @ODED:
             //  Call this function only when the user decides to save to the DB the POI list that is currently
             //  being displayed.
-            
-
         };
 
         $scope.sortByRank = function(){
@@ -82,7 +80,7 @@ angular.module("myApp")
             $http.delete('http://localhost:3000/delete/favorites/username=' + '\'' + service.username + '\'')
             .then(function successCallback(res){
              });
-            var fcolumnString = "username+point_of_interest+date";
+            var fcolumnString = "username+point_of_interest+date+sortingOrder";
             for(var j in service.favoritesList){
                 if(service.favoritesList[j] == 'images/fullStar.png'){
                     var today = new Date();
