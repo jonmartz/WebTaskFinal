@@ -32,6 +32,7 @@ angular.module("myApp")
         {
             var idx=url.indexOf('_');
             $scope.name=url.substring(0,idx);
+            $scope.name=decodeURIComponent($scope.name);
             $scope.isFav=url.substring(idx+1);
             if($scope.isFav==='true'){
                 $scope.starPic='images/fullStar.png';
@@ -43,7 +44,7 @@ angular.module("myApp")
         }
         else
         {
-            $scope.name=url
+            $scope.name=decodeURIComponent(url);
         }
     }
     $scope.parseUrl(window.location.hash.substring(13));
