@@ -39,12 +39,22 @@ angular.module("myApp")
                             //  Also, update  $rootScope.favorsCount = [number of favorites] and not 0 like I did there
                             var favList={};//service.favoritesList;
                             $rootScope.favorsCount=0;
-                            var result=res.data;
-                            for(var i in result){
-                                favList[result[i].name] = 'images/fullStar.png';
+                            var myResult=res.data;
+                            for(var i in myResult){
+                                favList[myResult[i].name] = 'images/fullStar.png';
                                 $rootScope.favorsCount++;
                             }
                             service.favoritesList=favList;
+                            $http.get('http://localhost:3000/select/favorites/point_of_interest,sortingOrder/username=' +'\'' + service.username + '\'')
+                            .then(function successCallback(result){
+                                var ret=result.data;
+                                var mapping={};
+                                for(var i in ret)
+                                {
+                                    mapping[ret[i].point_of_interest]=ret[i].sortingOrder;
+                                }
+                                service.orderingMapping=mapping;
+                            });
                         });
                 }
                 , function errorCallback(res) {
