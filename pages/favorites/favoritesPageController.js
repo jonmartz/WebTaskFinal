@@ -34,7 +34,10 @@ angular.module("myApp")
 
         $scope.sortByCategory = function(){
             let tmpFavorC = $scope.favorPois
-            tmpFavorC.sort(function(a, b) {return parseFloat(b.categoryName) - parseFloat(a.categoryName);});
+            tmpFavorC.sort(function(a, b){
+                if(a.categoryName < b.categoryName) { return -1; }
+                if(a.categoryName > b.categoryName) { return 1; }
+                return 0;});
             $scope.favorPois = tmpFavorC;
         };
 
@@ -82,6 +85,10 @@ angular.module("myApp")
                     var today = new Date();
                     var dd = today.getDate();
                     var mm = today.getMonth() + 1; 
+                    var hh = today.getHours();
+                    var mint = today.getMinutes();
+                    var ss = today.getSeconds();
+                    var ms = today.getMilliseconds();
 
                     var yyyy = today.getFullYear();
                     if (dd < 10) {
@@ -90,7 +97,7 @@ angular.module("myApp")
                     if (mm < 10) {
                     mm = '0' + mm;
                     } 
-                    var today = mm + '-' + dd + '-' + yyyy;
+                    var today = mm + '-' + dd + '-' + yyyy + ' ' + hh + ':' + mint + ':' + ss + '.' + ms;
                     var fvalues = [service.username, j, today];
                     var fbody = service.createBody("favorites",fcolumnString, fvalues);
                     $http.post('http://localhost:3000/insert', fbody).then(
@@ -100,7 +107,9 @@ angular.module("myApp")
                             // $scope.answer = "error registering question 2: " + res.data;
                         }
                     );
+                    for(var x=0; x<1000000; x++){var y = y+1;};
                 }
             }
+            alert('saved!');
         }
     });
