@@ -1,7 +1,13 @@
 <div>
-    <button ng-click="setFavortieListDB()">save your favorite points</button>
     <button ng-click="sortByRank()">sort by rank</button>
     <button ng-click="sortByCategory()">sort by category</button>
+    <button ng-click="sortByManual()">personal sorting</button>
+    <br>
+    <button ng-click="setFavortieListDB()" style="background-color: #263eff">save your favorite points</button>
+    <br>
+    <i style="color: #de271e">To remove a point of interest from this list, click the image and click the star icon</i>
+    <br>
+    <br>
 </div>
 <div  ng-repeat="poi in favorPois">
     <div>
@@ -11,8 +17,10 @@
             Category: <span ng-bind="poi.categoryName"></span><br>
         </i>
         <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)" height="100px">
-        <img ng-src="{{ service.favoritesList[poi.name] }}" ng-click="changeStar(poi.name)"
-             style="height: 50px; vertical-align: top; margin-left: -50px">
+        <span ng-if="manualOrdering">
+            <img ng-src="images/upArrow.png" ng-click="moveUp(poi.name)" style="height: 30px; vertical-align: top; cursor: pointer;">
+            <img ng-src="images/downArrow.png" ng-click="moveDown(poi.name)" style="height: 30px; vertical-align: bottom; margin-left: -50px; cursor: pointer;">
+        </span>
         <br><br><br>
         <!--        <button ng-click="removeFromFavorites(poi.name)">remove {{poi.name}} from favorites</button>-->
         <!--        <br>-->

@@ -8,6 +8,7 @@ angular.module("myApp")
             document.getElementById('loginMenuEntry').innerHTML = "Log-in";
             $rootScope.favorsToShow = false;
             service.favoritesList = {};
+            service.orderingMapping = {};
         }
 
         $scope.submit = function(){
@@ -33,11 +34,11 @@ angular.module("myApp")
                     $rootScope.favorsToShow = true;
                     $http.get('http://localhost:3000/select/pointOfInterest/name,categoryName,image,rank/name IN (SELECT point_of_interest FROM favorites WHERE username=' +'\'' + service.username + '\''+')')
                         .then(function successCallback(res){
-                            // todo: @SHAJAR:
-                            //  Here, update the service.favoritesList you made using res.data which contains
-                            //  a list with all the names of the favorite pois saved in DB (use res.data[i].name to get
-                            //  the name of poi number i from the list).
-                            //  Also, update  $rootScope.favorsCount = [number of favorites] and not 0 like I did there
+
+                            // todo: @ODED:
+                            //  Update the data structure you used to display the favorites pois here instead of
+                            //  updating it in the pois screen, so that the favorites screen works right after logging in.
+
                             var favList={};//service.favoritesList;
                             $rootScope.favorsCount=0;
                             var myResult=res.data;
