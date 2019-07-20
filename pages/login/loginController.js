@@ -27,7 +27,6 @@ angular.module("myApp")
 
                     // Changes things after log in
                     $window.sessionStorage.setItem("token",res.data);
-                    $window.location.href = "#!";
                     document.getElementById('upperMessageBox').innerHTML = "Hello "+$scope.username;
                     document.getElementById('loginMenuEntry').innerHTML = "Log-out";
                     service.username = $scope.username
@@ -53,27 +52,22 @@ angular.module("myApp")
                                         favList[myResult[i].name] = 'images/fullStar.png';
                                         $rootScope.favorsCount++;
                                     }
-                                    
                                     service.favoritesList=favList;
-                                    
+
+                                    $http.get('http://localhost:3000/select/favorites/point_of_interest,sortingOrder/username=' +'\'' + service.username + '\'')
+                                        .then(function successCallback(result){
+                                            var ret=result.data;
+                                            var mapping={};
+                                            for(var i in ret)
+                                            {
+                                                mapping[ret[i].point_of_interest]=ret[i].sortingOrder;
+                                            }
+                                            service.orderingMapping=mapping;
+                                            $window.location.href = "#!";
+                                        });
+
                                 }
                             );
-                            
-
-                            //----------------------------------------------------------
-
-                            //-----------------------------------------------------------
-
-                            $http.get('http://localhost:3000/select/favorites/point_of_interest,sortingOrder/username=' +'\'' + service.username + '\'')
-                            .then(function successCallback(result){
-                                var ret=result.data;
-                                var mapping={};
-                                for(var i in ret)
-                                {
-                                    mapping[ret[i].point_of_interest]=ret[i].sortingOrder;
-                                }
-                                service.orderingMapping=mapping;
-                            });
                         });
                 }
                 , function errorCallback(res) {
