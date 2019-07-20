@@ -38,11 +38,24 @@ angular.module("myApp")
                             //  a list with all the names of the favorite pois saved in DB (use res.data[i].name to get
                             //  the name of poi number i from the list).
                             //  Also, update  $rootScope.favorsCount = [number of favorites] and not 0 like I did there
-                            var favList = service.favoritesList;
-                            for(var i in res.data){
-                                favList[res.data[i].name] = 'images/fullStar.png';
+                            var favList={};//service.favoritesList;
+                            $rootScope.favorsCount=0;
+                            var myResult=res.data;
+                            for(var i in myResult){
+                                favList[myResult[i].name] = 'images/fullStar.png';
+                                $rootScope.favorsCount++;
                             }
-                            $rootScope.favorsCount = res.data.length;
+                            service.favoritesList=favList;
+                            $http.get('http://localhost:3000/select/favorites/point_of_interest,sortingOrder/username=' +'\'' + service.username + '\'')
+                            .then(function successCallback(result){
+                                var ret=result.data;
+                                var mapping={};
+                                for(var i in ret)
+                                {
+                                    mapping[ret[i].point_of_interest]=ret[i].sortingOrder;
+                                }
+                                service.orderingMapping=mapping;
+                            });
                         });
                 }
                 , function errorCallback(res) {
