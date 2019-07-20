@@ -57,7 +57,6 @@ angular.module("myApp")
         };
 
         $scope.moveUp = function (poiName){
-
             if (service.orderingMapping[poiName] > 1)
                 service.orderingMapping[poiName]--;
         };
