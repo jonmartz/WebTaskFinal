@@ -19,7 +19,6 @@ app.use((req, res, next) => {
     next();
 });
 
-// todo: check this on every private function
 app.use("/private", (req, res, next) => {
     console.log(req.headers);
     const token = req.header('x-auth-token');

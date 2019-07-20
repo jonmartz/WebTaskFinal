@@ -32,6 +32,7 @@ angular.module("myApp")
         {
             var idx=url.indexOf('_');
             $scope.name=url.substring(0,idx);
+            $scope.name=decodeURIComponent($scope.name);
             $scope.isFav=url.substring(idx+1);
             if($scope.isFav==='true'){
                 $scope.starPic='images/fullStar.png';
@@ -43,7 +44,7 @@ angular.module("myApp")
         }
         else
         {
-            $scope.name=url
+            $scope.name=decodeURIComponent(url);
         }
     }
     $scope.parseUrl(window.location.hash.substring(13));
@@ -148,7 +149,7 @@ angular.module("myApp")
             });
         };
 
-        function updatePoiRank(poiName){ // todo: check this works
+        function updatePoiRank(poiName){
             $http.get("http://localhost:3000/select/reviews/score/pointOfInterest='"+poiName+"'").then(
                 function successCallback(res) {
                     var scores = res.data;
@@ -176,10 +177,6 @@ angular.module("myApp")
                 }
             );
         }
-
-        $scope.saveToFavorites=function() { // todo: save POI to favorites here
-
-        };
 
         var vm=this;
         vm.show=modalService.modalOn;							// Flag to show or hide the modal

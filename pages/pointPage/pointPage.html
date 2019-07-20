@@ -1,26 +1,30 @@
 <!-- css -->
 <body>
-<style>
-    img {
-        height: 200px;
-    }
-</style>
+<!--<style>-->
+<!--    img {-->
+<!--        height: 200px;-->
+<!--    }-->
+<!--</style>-->
 <h2>{{name}}</h2>
 <p ng-repeat="poi in poiInfo">
-    <img ng-src="{{ poi.image }}"><br><br><br>
-    Point Of Interest City: <span ng-bind="poi.city"></span><br>
-    Point Of Interest Rank: <span ng-bind="poi.rank"></span><br>
-    Point Of Interest Number of Viewers: <span ng-bind="poi.numOfViewers"></span><br>
-    Point Of Interest Description: <span ng-bind="poi.description"></span><br>
+    <img ng-src="{{ poi.image }}" style="height: 200px">
+    <span ng-if="isLogged">
+    <img ng-src="{{ starPic }}" ng-click="changeStar(name)" style="height: 50px; vertical-align: top; margin-left: -50px">
+</span><br><br>
+    <i>
+        City: <span ng-bind="poi.city"></span><br>
+        Rank: <span ng-bind="poi.rank"></span><br>
+        Views: <span ng-bind="poi.numOfViewers"></span><br>
+        Description: </i><br>
+    <span ng-bind="poi.description"></span>
+
+    <br><br>
 <div id="notLoggedIn" style="color: #c00000">
     Please log in to write a review or save to favorites
 </div>
-<div ng-if="isLogged">
-    <img ng-src="{{ starPic }}" ng-click="changeStar(name)">
-</div>
 <br>
 <button ng-click="writeReview()" id="reviewButton">Write a review</button>
-<button ng-click="saveToFavorites()" id="saveButton">Save to favorites</button>
+<!--<button ng-click="saveToFavorites()" id="saveButton">Save to favorites</button>-->
 </p>
 <br>
 <h3>Most Recent 2 Reviews:</h3>
@@ -53,7 +57,6 @@
             <button  ng-disabled="form.$invalid" ng-click="modal.returnValue(false)">Send review</button>
             <button  ng-click="modal.returnValue(true)" style="float: right; background-color: #a04b51">Cancel</button>
         </div>
-
     </div>
 </div>
 

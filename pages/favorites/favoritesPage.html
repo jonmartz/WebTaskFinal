@@ -7,9 +7,12 @@
         Point Of Interest Name: <span ng-bind="poi.name" ng-click="goToPointPage(poi.name)"></span><br>
         Point Of Interest Rank: <span ng-bind="poi.rank"></span><br>
         Point Of Interest category: <span ng-bind="poi.categoryName"></span><br>
-        <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)" width="200px" height="200px"><br><br><br>  
-        <button ng-click="removeFromFavorites(poi.name)">remove {{poi.name}} from favorites</button>
-        <br>
-        <br>
+        <img ng-src="{{ poi.image }}" ng-click="goToPointPage(poi.name)" width="200px" height="200px">
+        <img ng-src="{{ service.favoritesList[poi.name] }}" ng-click="changeStar(poi.name)"
+             style="height: 50px; vertical-align: top; margin-left: -50px">
+        <br><br><br>
+<!--        <button ng-click="removeFromFavorites(poi.name)">remove {{poi.name}} from favorites</button>-->
+<!--        <br>-->
+<!--        <br>-->
     </div>
 </div>

@@ -23,13 +23,22 @@ angular.module("myApp")
                     document.getElementById("submitButton").style.visibility = "hidden";
                     document.getElementById("submitText").style.color = "green";
 
+                    // Changes things after log in
                     $window.sessionStorage.setItem("token",res.data);
                     $window.location.href = "#!";
                     document.getElementById('upperMessageBox').innerHTML = "Hello "+$scope.username;
                     document.getElementById('loginMenuEntry').innerHTML = "Log-out";
                     service.username = $scope.username
                     $rootScope.favorsToShow = true;
-                    $rootScope.favorsCount = 0;   
+                    $http.get('http://localhost:3000/select/pointOfInterest/name,categoryName,image,rank/name IN (SELECT point_of_interest FROM favorites WHERE username=' +'\'' + service.username + '\''+')')
+                        .then(function successCallback(res){
+                            // todo: @SHAJAR:
+                            //  Here, update the service.favoritesList you made using res.data which contains
+                            //  a list with all the names of the favorite pois saved in DB (use res.data[i].name to get
+                            //  the name of poi number i from the list).
+                            //  Also, update  $rootScope.favorsCount = [number of favorites] and not 0 like I did there
+                            $rootScope.favorsCount = 0;
+                        });
                 }
                 , function errorCallback(res) {
                     $scope.answer = "Incorrect username or password"
