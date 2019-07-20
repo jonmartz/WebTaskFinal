@@ -34,10 +34,6 @@ angular.module("myApp")
                     $rootScope.favorsToShow = true;
                     $http.get('http://localhost:3000/select/pointOfInterest/name,categoryName,image,rank/name IN (SELECT point_of_interest FROM favorites WHERE username=' +'\'' + service.username + '\''+')')
                         .then(function successCallback(res){
-
-                            // todo: @ODED:
-                            //  Update the data structure you used to display the favorites pois here instead of
-                            //  updating it in the pois screen, so that the favorites screen works right after logging in.
                             $http.get("http://localhost:3000/select/pointOfInterest/name,categoryName,image,rank").then(function(response) {
                                     service.poisData=response.data;
                                 }

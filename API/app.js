@@ -168,7 +168,7 @@ app.post('/insert', function(req, res){
         }
     }
     if (!flag)
-        flag = validation.validateFinal(req);
+        flag = true;
     if(flag)
         dataBaseHandler.postWithoutCondition(req,res);
     else
