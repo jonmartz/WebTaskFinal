@@ -39,9 +39,7 @@ angular.module("myApp")
             // todo: @ODED:
             //  Call this function only when the user decides to save to the DB the POI list that is currently
             //  being displayed.
-            $http.delete('http://localhost:3000/delete/favorites/username=' + '\'' + service.username + '\'')
-           .then(function successCallback(res){
-            });
+            
 
         };
 
@@ -78,5 +76,37 @@ angular.module("myApp")
         if(currFavs[name]==='images/fullStar.png')
             flag=true;
         $window.location.href = "#!pointPage#"+name+"_"+flag;         
-    }
+        }
+
+        $scope.setFavortieListDB = function(){
+            $http.delete('http://localhost:3000/delete/favorites/username=' + '\'' + service.username + '\'')
+            .then(function successCallback(res){
+             });
+            var fcolumnString = "username+point_of_interest+date";
+            for(var j in service.favoritesList){
+                if(service.favoritesList[j] == 'images/fullStar.png'){
+                    var today = new Date();
+                    var dd = today.getDate();
+                    var mm = today.getMonth() + 1; 
+
+                    var yyyy = today.getFullYear();
+                    if (dd < 10) {
+                    dd = '0' + dd;
+                    } 
+                    if (mm < 10) {
+                    mm = '0' + mm;
+                    } 
+                    var today = mm + '-' + dd + '-' + yyyy;
+                    var fvalues = [service.username, j, today];
+                    var fbody = service.createBody("favorites",fcolumnString, fvalues);
+                    $http.post('http://localhost:3000/insert', fbody).then(
+                        function successCallback(res) {
+                        }
+                        , function errorCallback(res) {
+                            // $scope.answer = "error registering question 2: " + res.data;
+                        }
+                    );
+                }
+            }
+        }
     });
